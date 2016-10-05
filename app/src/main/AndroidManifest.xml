@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.rep5.sialah.sia">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/sialogo"
@@ -15,25 +17,31 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name="com.rep5.sialah.sia.SignInActivity" />
+        <activity android:name=".SignInActivity" />
 
         <service
-            android:name="com.rep5.sialah.sia.MyFirebaseMessagingService"
+            android:name=".MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service
-            android:name="com.rep5.sialah.sia.MyFirebaseInstanceIdService"
+            android:name=".MyFirebaseInstanceIdService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
+        <activity
+            android:name=".DropDownMenu"
+            android:theme="@style/Theme.AppCompat.Translucent" />
+        <activity
+            android:name=".Ticket"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_ticket"
+            android:theme="@style/FullscreenTheme"></activity>
     </application>
 
 </manifest>

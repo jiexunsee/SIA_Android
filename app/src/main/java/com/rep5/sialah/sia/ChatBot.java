@@ -1,10 +1,13 @@
 package com.rep5.sialah.sia;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,17 +16,21 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
@@ -33,19 +40,23 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatBot extends AppCompatActivity
         implements GoogleApiClient.OnConnectionFailedListener {
+
+    private static ChatBot instance;
+
+    LinkedList<ChatBotMessage> messagehistory = new LinkedList<ChatBotMessage>();
 
     public static class MessageViewHolder extends RecyclerView.ViewHolder {
         public TextView messageTextView;
@@ -74,13 +85,13 @@ public class ChatBot extends AppCompatActivity
     private Button mSendButton;
     private RecyclerView mMessageRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
-    private ProgressBar mProgressBar;
+    //private ProgressBar mProgressBar;
     private EditText mMessageEditText;
 
     // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
-    private DatabaseReference mFirebaseDatabaseReference;
+    static DatabaseReference mFirebaseDatabaseReference;
     private FirebaseRecyclerAdapter<FriendlyMessage, MessageViewHolder>
             mFirebaseAdapter;
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
@@ -88,6 +99,15 @@ public class ChatBot extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //send token to heok hong
+        SendText send = new SendText();
+        send.setText(FirebaseInstanceId.getInstance().getToken());
+        Thread t = new Thread(send);
+        t.start();
+
+        instance = this;
+
         setContentView(R.layout.activity_chat_bot);
 
         FirebaseMessaging.getInstance().subscribeToTopic("sia");
@@ -116,75 +136,26 @@ public class ChatBot extends AppCompatActivity
                 .addApi(Auth.GOOGLE_SIGN_IN_API)
                 .build();
 
-        // Initialize ProgressBar and RecyclerView.
-        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
-        mMessageRecyclerView = (RecyclerView) findViewById(R.id.messageRecyclerView);
-        mLinearLayoutManager = new LinearLayoutManager(this);
-        mLinearLayoutManager.setStackFromEnd(true);
-        mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
-
         // Initialize Firebase Remote Config.
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
 
-// Define Firebase Remote Config Settings.
+        // Define Firebase Remote Config Settings.
         FirebaseRemoteConfigSettings firebaseRemoteConfigSettings =
                 new FirebaseRemoteConfigSettings.Builder()
                         .setDeveloperModeEnabled(true)
                         .build();
 
-// Define default config values. Defaults are used when fetched config values are not
-// available. Eg: if an error occurred fetching values from the server.
+        // Define default config values. Defaults are used when fetched config values are not
+        // available. Eg: if an error occurred fetching values from the server.
         Map<String, Object> defaultConfigMap = new HashMap<>();
         defaultConfigMap.put("friendly_msg_length", 10L);
 
-// Apply config settings and default values.
+        // Apply config settings and default values.
         mFirebaseRemoteConfig.setConfigSettings(firebaseRemoteConfigSettings);
         mFirebaseRemoteConfig.setDefaults(defaultConfigMap);
 
-// Fetch remote config.
+        // Fetch remote config.
         fetchConfig();
-
-        // New child entries
-        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-
-        mFirebaseAdapter = new FirebaseRecyclerAdapter<FriendlyMessage,
-                MessageViewHolder>(
-                FriendlyMessage.class,
-                R.layout.item_message,
-                MessageViewHolder.class,
-                mFirebaseDatabaseReference.child(MESSAGES_CHILD)) {
-
-            @Override
-            protected void populateViewHolder(MessageViewHolder viewHolder,
-                                              FriendlyMessage friendlyMessage, int position) {
-                mProgressBar.setVisibility(ProgressBar.INVISIBLE);
-                viewHolder.messageTextView.setText(friendlyMessage.getText());
-                viewHolder.messengerTextView.setText(friendlyMessage.getName());
-                viewHolder.messengerImageView.setImageDrawable(ContextCompat.getDrawable(ChatBot.this,R.drawable.sialogo));
-
-            }
-        };
-
-        mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                super.onItemRangeInserted(positionStart, itemCount);
-                int friendlyMessageCount = mFirebaseAdapter.getItemCount();
-                int lastVisiblePosition =
-                        mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
-                // If the recycler view is initially being loaded or the
-                // user is at the bottom of the list, scroll to the bottom
-                // of the list to show the newly added message.
-                if (lastVisiblePosition == -1 ||
-                        (positionStart >= (friendlyMessageCount - 1) &&
-                                lastVisiblePosition == (positionStart - 1))) {
-                    mMessageRecyclerView.scrollToPosition(positionStart);
-                }
-            }
-        });
-
-        mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mMessageRecyclerView.setAdapter(mFirebaseAdapter);
 
         mMessageEditText = (EditText) findViewById(R.id.messageEditText);
         mMessageEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mSharedPreferences
@@ -215,31 +186,40 @@ public class ChatBot extends AppCompatActivity
 
                 String text = mMessageEditText.getText().toString();
 
-                FriendlyMessage friendlyMessage = new
-                        FriendlyMessage(text,
-                        mUsername,
-                        mPhotoUrl);
-                mFirebaseDatabaseReference.child(MESSAGES_CHILD)
-                        .push().setValue(friendlyMessage);
+                //DISPLAY MESSAGE
                 mMessageEditText.setText("");
 
-                //Sending stuff to Heok Hong
+                TextView bubble = new TextView(getApplicationContext());
+                bubble.setTextSize(18);
+                bubble.setText(text);
+                bubble.setTextColor(Color.parseColor("#000000"));
+                bubble.setBackgroundResource(R.drawable.sendbubble);
+                LinearLayout.LayoutParams bubblelayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
+                bubblelayout.setMargins(120, 6, 6, 6);
+                bubblelayout.gravity = Gravity.RIGHT;
+                bubble.setLayoutParams(bubblelayout);
+
+                ViewGroup chatbubbles = (ViewGroup) findViewById(R.id.conversation);
+                chatbubbles.addView(bubble);
+
+                Log.d(text, text);
 
 
+                // send message to heok hong
                 SendText send = new SendText();
-                send.setText(FirebaseInstanceId.getInstance().getToken()); //NEED TO SEND SESSION TOKEN
-                Thread t = new Thread(send);
-                t.start();
-
-                SiaMessage siaMessage = new SiaMessage();
-                SendObject sendObject = new SendObject();
-                siaMessage.setMessage(text);
-                sendObject.setSiaMessage(siaMessage);
-
-                Thread thread = new Thread(sendObject);
+                send.setText(text);
+                send.setUrl("http://lhhong.asuscomm.com:8080/sia/messages/");
+                Thread thread = new Thread(send);
                 thread.start();
 
-
+                final ScrollView scroll = (ScrollView) findViewById(R.id.scrollView);
+                scroll.post(new Runnable()
+                {
+                    public void run()
+                    {
+                        scroll.fullScroll(View.FOCUS_DOWN);
+                    }
+                });
             }
         });
     }
@@ -340,5 +320,95 @@ public class ChatBot extends AppCompatActivity
         mMessageEditText.setFilters(new InputFilter[]{new
                 InputFilter.LengthFilter(friendly_msg_length.intValue())});
         Log.d(TAG, "FML is: " + friendly_msg_length);
+    }
+
+    public void addReceivedMessage(String message) {
+        TextView reply = new TextView(this);
+        reply.setTextSize(18);
+        reply.setText(message);
+        reply.setTextColor(Color.parseColor("#000000"));
+        reply.setBackgroundResource(R.drawable.receivebubble);
+        LinearLayout.LayoutParams replylayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
+        replylayout.setMargins(6,6,120,6);
+        replylayout.gravity = Gravity.LEFT;
+        reply.setLayoutParams(replylayout);
+
+        ViewGroup chatbubbles = (ViewGroup) findViewById(R.id.conversation);
+        chatbubbles.addView(reply);
+
+
+        final ScrollView scroll = (ScrollView) findViewById(R.id.scrollView);
+        scroll.post(new Runnable()
+        {
+            public void run()
+            {
+                scroll.fullScroll(View.FOCUS_DOWN);
+            }
+        });
+
+    }
+
+    public void ShowDropDownMenu(View view) {
+
+        Intent intent = new Intent(this, DropDownMenu.class);
+        startActivity(intent);
+
+
+
+
+
+//        View fade = getLayoutInflater().inflate(R.layout.fade_pop_up,null);
+//
+//        View popupView = getLayoutInflater().inflate(R.layout.drop_down_menu, null);
+//
+//        hideKeyboard(this);
+//
+//        PopupWindow fadePopUp = new PopupWindow(fade,
+//                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+//
+//        PopupWindow popupWindow = new PopupWindow(popupView,
+//                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//
+//        // Initialize more widgets from `drop_down_menu.xml`
+//
+//
+//        // If the PopupWindow should be focusable
+//        fadePopUp.setFocusable(true);
+//        //popupWindow.setFocusable(true);
+//
+//
+//
+//        // If you need the PopupWindow to dismiss when when touched outside
+//        popupWindow.setBackgroundDrawable(new ColorDrawable());
+//
+//        fadePopUp.setBackgroundDrawable(new ColorDrawable());
+//
+//        int location[] = new int[2];
+//
+//        // Get the View's(the one that was clicked in the Fragment) location
+//        ImageView v = (ImageView) findViewById(R.id.showDropDownMenu);
+//        v.getLocationOnScreen(location);
+//
+//        // Using location, the PopupWindow will be displayed right under anchorView
+//        popupWindow.showAtLocation(v, Gravity.NO_GRAVITY,
+//                location[0], location[1] + v.getHeight());
+
+    }
+
+    public static ChatBot getChatBotInstance() {
+        return instance;
+    }
+
+
+    //for hiding keyboard when popup comes out
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

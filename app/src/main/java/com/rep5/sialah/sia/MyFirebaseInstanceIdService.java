@@ -37,11 +37,6 @@ public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
         String token = FirebaseInstanceId.getInstance().getToken();
         Log.d(TAG, "FCM Token: " + token);
 
-        SendText send = new SendText();
-        send.setText(FirebaseInstanceId.getInstance().getToken()); //NEED TO SEND SESSION TOKEN
-        Thread t = new Thread(send);
-        t.start();
-
         // Once a token is generated, we subscribe to topic.
         FirebaseMessaging.getInstance()
                 .subscribeToTopic(FRIENDLY_ENGAGE_TOPIC);

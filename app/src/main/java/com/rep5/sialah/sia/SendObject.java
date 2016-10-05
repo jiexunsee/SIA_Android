@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response;
 
 
 public class SendObject implements Runnable {
-    public SiaMessage siaMessage;
+    private SiaMessage siaMessage;
 
     public void setSiaMessage(SiaMessage siaMessage) {
         this.siaMessage = siaMessage;

@@ -15,7 +15,8 @@ import javax.ws.rs.core.Response;
 
 public class SendText implements Runnable {
 
-    public String text;
+    private String text;
+    private String url = "http://lhhong.asuscomm.com:8080/sia/messages/fcm_id";
 
     public void setText(String text) {
         this.text = text;
@@ -24,10 +25,14 @@ public class SendText implements Runnable {
     @Override
     public void run() {
 
-        WebTarget webTarget = RestClient.getTarget("http://lhhong.asuscomm.com:8080/sia/messages/fcm_id");
+        WebTarget webTarget = RestClient.getTarget(url);
         Response postResponse =
                 webTarget.request()
                         .post(Entity.entity(text, MediaType.TEXT_PLAIN));
 
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

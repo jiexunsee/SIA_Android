@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="left|top"
+    android:background="#00000000">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/showTicket"
+        android:maxWidth="48dp"
+        android:maxHeight="48dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/quickaccess"
+        android:onClick="ShowTicket"
+        android:background="#00000000"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bookmark"
+        android:maxWidth="48dp"
+        android:maxHeight="48dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/bookmark"
+        android:onClick="Bookmark"
+        android:background="#00000000"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/contactCustServ"
+        android:maxWidth="48dp"
+        android:maxHeight="48dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/customercall"
+        android:onClick="ContactCustServ"
+        android:background="#00000000"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/shop"
+        android:maxWidth="48dp"
+        android:maxHeight="48dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/shopping"
+        android:onClick="Shop"
+        android:background="#00000000"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/help"
+        android:maxWidth="48dp"
+        android:maxHeight="48dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/information"
+        android:onClick="Help"
+        android:background="#00000000"/>
+
+</LinearLayout>

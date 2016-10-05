@@ -18,22 +18,23 @@ package com.rep5.sialah.sia;
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import static com.rep5.sialah.sia.ChatBot.MESSAGES_CHILD;
+import static com.rep5.sialah.sia.ChatBot.mFirebaseDatabaseReference;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFMService";
     private FirebaseRecyclerAdapter<FriendlyMessage, ChatBot.MessageViewHolder> mFirebaseAdapterreceive;
-    private DatabaseReference mFirebaseDatabaseReference;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -43,46 +44,38 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         SiaMessage msg = new SiaMessage();
         msg.setContext(context);
         msg.setMessage(remoteMessage.getData().get("message"));
-        msg.setId(Long.parseLong(remoteMessage.getData().get("id")));
 
         boolean booking;
         booking = context.getSiaData().getFakeBooking();
 
 
-        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-        mFirebaseAdapterreceive = new FirebaseRecyclerAdapter<FriendlyMessage,
-                ChatBot.MessageViewHolder>(
-                FriendlyMessage.class,
-                R.layout.item_received,
-                ChatBot.MessageViewHolder.class,
-                mFirebaseDatabaseReference.child(MESSAGES_CHILD)) {
+//        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+//
+//
+//        FriendlyMessage friendlyMessage = new
+//                FriendlyMessage(msg.getMessage(),
+//                "SIA",
+//                "@drawable/sialogo");
+//
+//        mFirebaseDatabaseReference.child(MESSAGES_CHILD)
+//                .push().setValue(friendlyMessage);
 
 
+//        LinearLayout messagebubble = (LinearLayout) getLayoutInflater().inflate(R.layout.item_message, null);
+//        ScrollView conversation = (ScrollView) findViewById(R.id.conversation);
+//        conversation.addView(messagebubble);
+//        TextView messagetext = (TextView) findViewById(R.id.messageTextView);
+//        messagetext.setText(msg.getMessage());
+//        TextView messagesender = (TextView) findViewById(R.id.messengerTextView);
+//        messagesender.setText("SIA");
 
-            @Override
-            protected void populateViewHolder(ChatBot.MessageViewHolder viewHolder,
-                                              FriendlyMessage friendlyMessage, int position) {
-                viewHolder.messageTextView.setText(friendlyMessage.getText());
-                viewHolder.messengerTextView.setText(friendlyMessage.getName());
-            }
-        };
-        Log.d("HI","RECEIVE LAYOUT CREATED");
-
-        FriendlyMessage friendlyMessage = new
-                FriendlyMessage(msg.getMessage(),
-                "SIA",
-                "@drawable/sialogo");
-
-        mFirebaseDatabaseReference.child(MESSAGES_CHILD)
-                .push().setValue(friendlyMessage);
-
+        GetReceivedMessage get = new GetReceivedMessage();
+        get.setSiaMessage(msg);
+        ChatBot.getChatBotInstance().runOnUiThread(get);
 
         if (booking) {
 
         }
-
-
-
 
 
 
