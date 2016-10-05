@@ -41,7 +41,14 @@
             android:name=".Ticket"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_ticket"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:theme="@style/FullscreenTheme" />
+        <activity android:name=".PlaneChat" />
+        <activity
+            android:name=".MessageOptions"
+            android:theme="@style/Theme.AppCompat.Translucent" />
+        <activity
+            android:name=".FlightCalendar"
+            android:theme="@style/Theme.AppCompat.Translucent"></activity>
     </application>
 
 </manifest>

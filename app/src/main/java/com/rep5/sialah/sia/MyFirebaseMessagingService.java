@@ -45,38 +45,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         msg.setContext(context);
         msg.setMessage(remoteMessage.getData().get("message"));
 
-        boolean booking;
-        booking = context.getSiaData().getFakeBooking();
-
-
-//        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-//
-//
-//        FriendlyMessage friendlyMessage = new
-//                FriendlyMessage(msg.getMessage(),
-//                "SIA",
-//                "@drawable/sialogo");
-//
-//        mFirebaseDatabaseReference.child(MESSAGES_CHILD)
-//                .push().setValue(friendlyMessage);
-
-
-//        LinearLayout messagebubble = (LinearLayout) getLayoutInflater().inflate(R.layout.item_message, null);
-//        ScrollView conversation = (ScrollView) findViewById(R.id.conversation);
-//        conversation.addView(messagebubble);
-//        TextView messagetext = (TextView) findViewById(R.id.messageTextView);
-//        messagetext.setText(msg.getMessage());
-//        TextView messagesender = (TextView) findViewById(R.id.messengerTextView);
-//        messagesender.setText("SIA");
-
         GetReceivedMessage get = new GetReceivedMessage();
         get.setSiaMessage(msg);
         ChatBot.getChatBotInstance().runOnUiThread(get);
-
-        if (booking) {
-
-        }
-
 
 
         Log.d(TAG, "FCM Message Id: " + remoteMessage.getMessageId());

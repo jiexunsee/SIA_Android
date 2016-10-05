@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
@@ -17,6 +20,7 @@ import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,8 +28,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -322,8 +329,9 @@ public class ChatBot extends AppCompatActivity
         Log.d(TAG, "FML is: " + friendly_msg_length);
     }
 
-    public void addReceivedMessage(String message) {
-        TextView reply = new TextView(this);
+    public void addReceivedMessage(SiaMessage siaMessage) {
+        String message = siaMessage.getMessage();
+        final TextView reply = new TextView(this);
         reply.setTextSize(18);
         reply.setText(message);
         reply.setTextColor(Color.parseColor("#000000"));
@@ -336,6 +344,20 @@ public class ChatBot extends AppCompatActivity
         ViewGroup chatbubbles = (ViewGroup) findViewById(R.id.conversation);
         chatbubbles.addView(reply);
 
+        reply.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MessageOptions.class);
+                startActivity(intent);
+                return true;
+            }
+        });
+
+        if (siaMessage.getContext().getSiaData().getFakeBooking()) {
+
+            Intent intent = new Intent(this, FlightCalendar.class);
+            startActivity(intent);
+        }
 
         final ScrollView scroll = (ScrollView) findViewById(R.id.scrollView);
         scroll.post(new Runnable()
@@ -349,50 +371,13 @@ public class ChatBot extends AppCompatActivity
     }
 
     public void ShowDropDownMenu(View view) {
-
         Intent intent = new Intent(this, DropDownMenu.class);
         startActivity(intent);
+    }
 
-
-
-
-
-//        View fade = getLayoutInflater().inflate(R.layout.fade_pop_up,null);
-//
-//        View popupView = getLayoutInflater().inflate(R.layout.drop_down_menu, null);
-//
-//        hideKeyboard(this);
-//
-//        PopupWindow fadePopUp = new PopupWindow(fade,
-//                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-//
-//        PopupWindow popupWindow = new PopupWindow(popupView,
-//                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-//
-//        // Initialize more widgets from `drop_down_menu.xml`
-//
-//
-//        // If the PopupWindow should be focusable
-//        fadePopUp.setFocusable(true);
-//        //popupWindow.setFocusable(true);
-//
-//
-//
-//        // If you need the PopupWindow to dismiss when when touched outside
-//        popupWindow.setBackgroundDrawable(new ColorDrawable());
-//
-//        fadePopUp.setBackgroundDrawable(new ColorDrawable());
-//
-//        int location[] = new int[2];
-//
-//        // Get the View's(the one that was clicked in the Fragment) location
-//        ImageView v = (ImageView) findViewById(R.id.showDropDownMenu);
-//        v.getLocationOnScreen(location);
-//
-//        // Using location, the PopupWindow will be displayed right under anchorView
-//        popupWindow.showAtLocation(v, Gravity.NO_GRAVITY,
-//                location[0], location[1] + v.getHeight());
-
+    public void ShowPlaneChat(View view) {
+        Intent intent = new Intent(this, PlaneChat.class);
+        startActivity(intent);
     }
 
     public static ChatBot getChatBotInstance() {

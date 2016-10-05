@@ -14,7 +14,7 @@ public class GetReceivedMessage implements Runnable {
 
     @Override
     public void run() {
-        ChatBot.getChatBotInstance().addReceivedMessage(siaMessage.getMessage());
+        ChatBot.getChatBotInstance().addReceivedMessage(siaMessage);
     }
 
 }

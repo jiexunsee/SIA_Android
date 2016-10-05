@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
     android:orientation="vertical"
     tools:context="com.rep5.sialah.sia.ChatBot">
 
@@ -19,8 +19,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -32,7 +34,28 @@
             android:scaleType="fitCenter"
             android:src="@drawable/buttondefault"
             android:onClick="ShowDropDownMenu"
-            android:background="#00000000"/>
+            android:background="#00000000" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="SIA Intelligent Assistant"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:layout_weight="1"
+            android:gravity="center"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/showPlaneChat"
+            android:maxWidth="48dp"
+            android:maxHeight="48dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/buttondefault"
+            android:onClick="ShowPlaneChat"
+            android:background="#00000000" />
 
     </LinearLayout>
 
@@ -48,7 +71,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:id="@+id/conversation">
+            android:id="@+id/conversation"
+            android:padding="8dp">
 
         </LinearLayout>
 
@@ -58,7 +82,8 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="8dp">
 
         <EditText
             android:id="@+id/messageEditText"
@@ -77,30 +102,4 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxWidth="48dp"
-            android:maxHeight="48dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/plane"
-            android:onClick="ShowTicket"
-            android:background="#00000000"/>
-
-    </LinearLayout>
-
-    <!--<ProgressBar-->
-        <!--android:id="@+id/progressBar"-->
-        <!--style="?android:attr/progressBarStyleLarge"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_centerVertical="true"/>-->
 </LinearLayout>
