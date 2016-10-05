@@ -14,7 +14,7 @@ public class PlaneChat extends AppCompatActivity {
     }
 
     public void OpenConversation(View view) {
-//        Intent intent = new Intent (this, FriendConversation.class);
-//        startActivity(intent);
+        Intent intent = new Intent (this, FriendConversation.class);
+        startActivity(intent);
     }
 }

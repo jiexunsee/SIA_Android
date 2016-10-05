@@ -63,7 +63,6 @@ public class ChatBot extends AppCompatActivity
 
     private static ChatBot instance;
 
-    LinkedList<ChatBotMessage> messagehistory = new LinkedList<ChatBotMessage>();
 
     public static class MessageViewHolder extends RecyclerView.ViewHolder {
         public TextView messageTextView;
@@ -107,11 +106,14 @@ public class ChatBot extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //send token to heok hong
-        SendText send = new SendText();
-        send.setText(FirebaseInstanceId.getInstance().getToken());
-        Thread t = new Thread(send);
-        t.start();
+        SendToken.send();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RestClient.getTarget("http://lhhong.asuscomm.com:8080/sia/signals/start").request().get();
+            }
+        }).start();
 
         instance = this;
 
@@ -192,6 +194,7 @@ public class ChatBot extends AppCompatActivity
             public void onClick(View view) {
 
                 String text = mMessageEditText.getText().toString();
+                StaticClass.messageHistory.add(new ChatBotMessage("user", text));
 
                 //DISPLAY MESSAGE
                 mMessageEditText.setText("");
@@ -202,7 +205,7 @@ public class ChatBot extends AppCompatActivity
                 bubble.setTextColor(Color.parseColor("#000000"));
                 bubble.setBackgroundResource(R.drawable.sendbubble);
                 LinearLayout.LayoutParams bubblelayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
-                bubblelayout.setMargins(120, 6, 6, 6);
+                bubblelayout.setMargins(200, 6, 6, 6);
                 bubblelayout.gravity = Gravity.RIGHT;
                 bubble.setLayoutParams(bubblelayout);
 
@@ -331,16 +334,17 @@ public class ChatBot extends AppCompatActivity
 
     public void addReceivedMessage(SiaMessage siaMessage) {
         String message = siaMessage.getMessage();
-        final TextView reply = new TextView(this);
+        StaticClass.messageHistory.add(new ChatBotMessage("Sia", message));
+
+        TextView reply = new TextView(this);
         reply.setTextSize(18);
         reply.setText(message);
         reply.setTextColor(Color.parseColor("#000000"));
         reply.setBackgroundResource(R.drawable.receivebubble);
         LinearLayout.LayoutParams replylayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
-        replylayout.setMargins(6,6,120,6);
+        replylayout.setMargins(6, 6, 200, 6);
         replylayout.gravity = Gravity.LEFT;
         reply.setLayoutParams(replylayout);
-
         ViewGroup chatbubbles = (ViewGroup) findViewById(R.id.conversation);
         chatbubbles.addView(reply);
 
@@ -355,9 +359,37 @@ public class ChatBot extends AppCompatActivity
 
         if (siaMessage.getContext().getSiaData().getFakeBooking()) {
 
-            Intent intent = new Intent(this, FlightCalendar.class);
-            startActivity(intent);
+            TextView choose = new TextView(this);
+            choose.setTextSize(18);
+            choose.setText(message);
+            choose.setTextColor(Color.parseColor("#000000"));
+            choose.setBackgroundResource(R.drawable.rounded_corners2);
+            choose.setLayoutParams(replylayout);
+            chatbubbles.addView(reply);
+
+            choose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), FlightCalendar.class);
+                    startActivity(intent);
+                }
+            });
         }
+
+        if (siaMessage.getContext().getSiaData().getNeedsCustomerService()) {
+            StaticClass.SendMessageHistory();
+        }
+
+
+        reply.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MessageOptions.class);
+                startActivity(intent);
+                return true;
+            }
+        });
+
 
         final ScrollView scroll = (ScrollView) findViewById(R.id.scrollView);
         scroll.post(new Runnable()

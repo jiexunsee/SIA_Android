@@ -1,60 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_chat_bot"
+    android:id="@+id/activity_friend_conversation"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="0dp"
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
     android:orientation="vertical"
     tools:context="com.rep5.sialah.sia.ChatBot">
 
-    <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:id="@+id/messageRecyclerView"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_above="@+id/linearLayout"/>-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
-        android:background="#e6e0d0"
+        android:background="@color/colorPrimaryDark"
         android:gravity="center">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:id="@+id/showDropDownMenu"
             android:maxWidth="36dp"
             android:maxHeight="36dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             android:src="@drawable/menulines2"
-            android:onClick="ShowDropDownMenu"
             android:background="#00000000" />
 
-        <ImageView
+        <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:maxHeight="24dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/title2"
-            android:layout_weight="1" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:id="@+id/showPlaneChat"
-            android:maxWidth="36dp"
-            android:maxHeight="36dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/planechat2"
-            android:onClick="ShowPlaneChat"
-            android:background="#00000000" />
+            android:text="Chat with Heok Hong"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:layout_weight="1"
+            android:gravity="center"/>
 
     </LinearLayout>
 
@@ -70,13 +53,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:id="@+id/conversation"
+            android:id="@+id/friendConversation"
             android:padding="8dp">
 
         </LinearLayout>
 
     </ScrollView>
-    
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -85,15 +68,15 @@
         android:padding="8dp">
 
         <EditText
-            android:id="@+id/messageEditText"
+            android:id="@+id/editText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:hint="Type a message to Sia"/>
+            android:hint="Type a message"/>
 
         <Button
-            android:id="@+id/sendButton"
+            android:id="@+id/send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
@@ -103,3 +86,4 @@
     </LinearLayout>
 
 </LinearLayout>
+

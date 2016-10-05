@@ -1,5 +1,9 @@
 package com.rep5.sialah.sia;
 
+/**
+ * Created by low on 1/10/16 5:45 AM.
+ */
+
 public class SiaData {
 
     //tell jx that watson recognised booking intent, start to fake the convo
@@ -23,11 +27,39 @@ public class SiaData {
 
     //to be set by jx
 //    private boolean talkingToCustomerService;
+    private Boolean needsCustomerService;
 
+    private Boolean planeChat;
+
+    private Boolean confirmingCheckIn;
     //for watson use
     private boolean inFlight;
 
     public SiaData() {
+    }
+
+    public Boolean getNeedsCustomerService() {
+        return needsCustomerService;
+    }
+
+    public void setNeedsCustomerService(Boolean needsCustomerService) {
+        this.needsCustomerService = needsCustomerService;
+    }
+
+    public Boolean getConfirmingCheckIn() {
+        return confirmingCheckIn;
+    }
+
+    public void setConfirmingCheckIn(Boolean confirmingCheckIn) {
+        this.confirmingCheckIn = confirmingCheckIn;
+    }
+
+    public Boolean getPlaneChat() {
+        return planeChat;
+    }
+
+    public void setPlaneChat(Boolean planeChat) {
+        this.planeChat = planeChat;
     }
 
     public String getCustomerRequestType() {

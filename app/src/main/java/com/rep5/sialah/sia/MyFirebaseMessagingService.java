@@ -45,10 +45,22 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         msg.setContext(context);
         msg.setMessage(remoteMessage.getData().get("message"));
 
-        GetReceivedMessage get = new GetReceivedMessage();
-        get.setSiaMessage(msg);
-        ChatBot.getChatBotInstance().runOnUiThread(get);
+        Log.d(msg.getContext().getSiaData().getPlaneChat().toString(),"h");
 
+
+
+        if (!msg.getContext().getSiaData().getPlaneChat()) {
+            GetReceivedMessage get = new GetReceivedMessage();
+            get.setSiaMessage(msg);
+            ChatBot.getChatBotInstance().runOnUiThread(get);
+        }
+
+        else if (msg.getContext().getSiaData().getPlaneChat()) {
+            Log.d(FriendConversation.getInstance().toString(),"null or not");
+            GetReceivedFriendMessage get = new GetReceivedFriendMessage();
+            get.setSiaMessage(msg);
+            FriendConversation.getInstance().runOnUiThread(get);
+        }
 
         Log.d(TAG, "FCM Message Id: " + remoteMessage.getMessageId());
         Log.d(TAG, "FCM Notification Message: " +

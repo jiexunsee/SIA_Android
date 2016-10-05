@@ -15,11 +15,19 @@ public class ChatBotMessage {
     }
 
     public String getSender() {
-        return this.sender;
+        return sender;
     }
 
     public String getMessage() {
-        return this.message;
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
     }
 
 }
