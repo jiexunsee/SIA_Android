@@ -83,14 +83,17 @@
 
 
         <ImageButton
-            android:layout_width="30dp"
+            android:layout_width="36dp"
             android:layout_height="40dp"
-            android:padding="6dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
             android:background="#00000000"
-            android:src="@drawable/smileyface"
-            android:layout_gravity="bottom" />
+            android:src="@drawable/smiley"
+            android:enabled="false"
+            android:layout_gravity="bottom"
+            android:id="@+id/imageButton" />
 
         <FrameLayout
             android:layout_width="0dp"
@@ -110,7 +113,7 @@
         </FrameLayout>
 
         <ImageButton
-            android:layout_width="30dp"
+            android:layout_width="36dp"
             android:layout_height="40dp"
             android:padding="6dp"
             android:scaleType="fitCenter"
@@ -123,7 +126,6 @@
         <ImageButton
             android:layout_width="36dp"
             android:layout_height="40dp"
-            android:paddingLeft="9dp"
             android:padding="6dp"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"

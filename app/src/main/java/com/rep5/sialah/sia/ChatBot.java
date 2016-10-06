@@ -44,7 +44,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChatBot extends AppCompatActivity
-        implements GoogleApiClient.OnConnectionFailedListener {
+        implements GoogleApiClient.OnConnectionFailedListener, FlightCalendarFragment.OnFlightCalendarInteractionListener{
 
     private static ChatBot instance;
     public static ImageView title;
@@ -73,6 +73,7 @@ public class ChatBot extends AppCompatActivity
 //    private FirebaseRecyclerAdapter<FriendlyMessage, MessageViewHolder>
 //            mFirebaseAdapter;
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
+    private FlightCalendarFragment mFlightCalendarFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -411,8 +412,7 @@ public class ChatBot extends AppCompatActivity
         chooseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), FlightCalendar.class);
-                startActivity(intent);
+                startFlightCalendarDialog();
             }
         });
 
@@ -513,5 +513,25 @@ public class ChatBot extends AppCompatActivity
             view = new View(activity);
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    //Fragment Methods
+    private void startFlightCalendarDialog() {
+        mFlightCalendarFragment = new FlightCalendarFragment();
+        mFlightCalendarFragment.show(getSupportFragmentManager(), "FragmentManager");
+    }
+
+
+    @Override
+    public void onFlightCalendarConfirm() {
+        mFlightCalendarFragment.dismiss();
+        ChooseFlight();
+        hideKeyboard(this);
+    }
+
+    @Override
+    public void onFlightCalendarCancel() {
+        mFlightCalendarFragment.dismiss();
+        hideKeyboard(this);
     }
 }

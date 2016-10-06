@@ -22,18 +22,24 @@
             android:textSize="16sp"
             android:background="@drawable/rounded_top_half_view"/>
 
-        <TextView
-            android:id="@+id/message_single_action_button"
-            android:text="Choose Date"
-            style="@style/TextAppearance.AppCompat.Button"
-            android:textSize="15sp"
-            android:textAllCaps="true"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="12dp"
-            android:textColor="#486DB5"
-            android:background="@drawable/rounded_bottom_half_view"/>
+            android:background="@drawable/rounded_bottom_half_view">
+            <TextView
+                android:id="@+id/message_single_action_button"
+                android:text="Choose Date"
+                style="@style/Base.TextAppearance.AppCompat.Button"
+                android:textSize="14sp"
+                android:textAllCaps="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="12dp"
+                android:textColor="#009688"
+                android:background="?android:attr/selectableItemBackground"/>
+        </FrameLayout>
+
     </LinearLayout>
 
 
