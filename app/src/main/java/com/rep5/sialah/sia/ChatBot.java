@@ -4,12 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -22,8 +20,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -80,11 +78,8 @@ public class ChatBot extends AppCompatActivity
     private SharedPreferences mSharedPreferences;
     private GoogleApiClient mGoogleApiClient;
 
-    private Button mSendButton;
-    private RecyclerView mMessageRecyclerView;
-    private LinearLayoutManager mLinearLayoutManager;
-    //private ProgressBar mProgressBar;
     private EditText mMessageEditText;
+    private ImageButton sendButton;
 
     // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
@@ -160,6 +155,9 @@ public class ChatBot extends AppCompatActivity
         // Fetch remote config.
         fetchConfig();
 
+
+        sendButton = (ImageButton) findViewById(R.id.realSendButton);
+
         mMessageEditText = (EditText) findViewById(R.id.messageEditText);
         mMessageEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mSharedPreferences
                 .getInt(CodelabPreferences.FRIENDLY_MSG_LENGTH, DEFAULT_MSG_LENGTH_LIMIT))});
@@ -171,9 +169,12 @@ public class ChatBot extends AppCompatActivity
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.toString().trim().length() > 0) {
-                    mSendButton.setEnabled(true);
+                    Log.d("EDITBOX", Integer.toString(charSequence.toString().trim().length()));
+                    sendButton.setEnabled(true);
+                    sendButton.setImageResource(R.drawable.plane);
                 } else {
-                    mSendButton.setEnabled(false);
+                    sendButton.setEnabled(false);
+                    sendButton.setImageResource(R.drawable.buttondefault);
                 }
             }
 
@@ -182,8 +183,7 @@ public class ChatBot extends AppCompatActivity
             }
         });
 
-        mSendButton = (Button) findViewById(R.id.sendButton);
-        mSendButton.setOnClickListener(new View.OnClickListener() {
+        sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -353,22 +353,7 @@ public class ChatBot extends AppCompatActivity
         });
 
         if (siaMessage.getContext().getSiaData().getFakeBooking()) {
-
-            TextView choose = new TextView(this);
-            choose.setTextSize(18);
-            choose.setText("CHOOSE DATE");
-            choose.setTextColor(Color.parseColor("#000000"));
-            choose.setBackgroundResource(R.drawable.rounded_corners2);
-            choose.setLayoutParams(replylayout);
-            chatbubbles.addView(choose);
-
-            choose.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), FlightCalendar.class);
-                    startActivity(intent);
-                }
-            });
+            FakeBooking(replylayout, chatbubbles);
         }
 
         if (siaMessage.getContext().getSiaData().getNeedsCustomerService()) {
@@ -407,6 +392,50 @@ public class ChatBot extends AppCompatActivity
         Intent intent = new Intent(this, PlaneChat.class);
         startActivity(intent);
     }
+
+
+    public void FakeBooking(LinearLayout.LayoutParams replylayout, ViewGroup chatbubbles) {
+        TextView choose = new TextView(this);
+        choose.setTextSize(18);
+        choose.setText("CHOOSE DATE");
+        choose.setTextColor(Color.parseColor("#000000"));
+        choose.setBackgroundResource(R.drawable.rounded_corners2);
+        choose.setLayoutParams(replylayout);
+        chatbubbles.addView(choose);
+
+        choose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), FlightCalendar.class);
+                startActivity(intent);
+            }
+        });
+
+        TextView dateReply = new TextView(this);
+        dateReply.setTextSize(18);
+        dateReply.setText("I have found the following flights on your chosen date. Click to select one of them:");
+        dateReply.setTextColor(Color.parseColor("#000000"));
+        dateReply.setBackgroundResource(R.drawable.receivebubble);
+        dateReply.setLayoutParams(replylayout);
+        chatbubbles.addView(dateReply);
+
+        View choice1 = getLayoutInflater().inflate(R.layout.flight_option1, null, false);
+        chatbubbles.addView(choice1);
+
+        View choice2 = getLayoutInflater().inflate(R.layout.flight_option2, null, false);
+        chatbubbles.addView(choice2);
+
+        choice1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Payment.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+
 
     public static ChatBot getChatBotInstance() {
         return instance;
