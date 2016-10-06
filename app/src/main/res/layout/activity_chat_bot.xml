@@ -26,6 +26,7 @@
             android:layout_width="48dp"
             android:layout_height="match_parent"
             android:padding="13dp"
+            android:paddingLeft="14dp"
             android:id="@+id/showDropDownMenu"
             android:src="@drawable/menulines2"
             android:onClick="ShowDropDownMenu"
