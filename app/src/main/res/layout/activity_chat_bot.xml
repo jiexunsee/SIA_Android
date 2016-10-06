@@ -19,7 +19,8 @@
         android:layout_height="60dp"
         android:orientation="horizontal"
         android:background="#e6e0d0"
-        android:gravity="center">
+        android:gravity="center"
+        android:id="@+id/topBar">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -35,6 +36,7 @@
             android:background="#00000000" />
 
         <ImageView
+            android:id="@+id/convoTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:maxHeight="24dp"

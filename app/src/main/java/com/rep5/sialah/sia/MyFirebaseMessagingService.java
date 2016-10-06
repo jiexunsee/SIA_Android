@@ -45,9 +45,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         msg.setContext(context);
         msg.setMessage(remoteMessage.getData().get("message"));
 
-        Log.d(msg.getContext().getSiaData().getPlaneChat().toString(),"h");
-
-
 
         if (!msg.getContext().getSiaData().getPlaneChat()) {
             GetReceivedMessage get = new GetReceivedMessage();

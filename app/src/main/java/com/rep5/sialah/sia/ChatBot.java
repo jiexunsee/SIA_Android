@@ -4,14 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Point;
-import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +16,6 @@ import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,11 +23,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,13 +40,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -62,6 +53,7 @@ public class ChatBot extends AppCompatActivity
         implements GoogleApiClient.OnConnectionFailedListener {
 
     private static ChatBot instance;
+    public static ImageView title;
 
 
     public static class MessageViewHolder extends RecyclerView.ViewHolder {
@@ -104,6 +96,7 @@ public class ChatBot extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         SendToken.send();
@@ -116,6 +109,7 @@ public class ChatBot extends AppCompatActivity
         }).start();
 
         instance = this;
+        title = (ImageView) findViewById(R.id.convoTitle);
 
         setContentView(R.layout.activity_chat_bot);
 
@@ -249,6 +243,7 @@ public class ChatBot extends AppCompatActivity
     @Override
     public void onResume() {
         super.onResume();
+
     }
 
     @Override
@@ -361,11 +356,11 @@ public class ChatBot extends AppCompatActivity
 
             TextView choose = new TextView(this);
             choose.setTextSize(18);
-            choose.setText(message);
+            choose.setText("CHOOSE DATE");
             choose.setTextColor(Color.parseColor("#000000"));
             choose.setBackgroundResource(R.drawable.rounded_corners2);
             choose.setLayoutParams(replylayout);
-            chatbubbles.addView(reply);
+            chatbubbles.addView(choose);
 
             choose.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -378,6 +373,7 @@ public class ChatBot extends AppCompatActivity
 
         if (siaMessage.getContext().getSiaData().getNeedsCustomerService()) {
             StaticClass.SendMessageHistory();
+
         }
 
 

@@ -1,14 +1,13 @@
 package com.rep5.sialah.sia;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-
-import com.alibaba.fastjson.JSON;
-
-import org.json.JSONObject;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 public class DropDownMenu extends AppCompatActivity {
 
@@ -29,5 +28,18 @@ public class DropDownMenu extends AppCompatActivity {
 
     public void ContactCustServ(View view) {
         StaticClass.SendMessageHistory();
+        onBackPressed();
+        ImageView title = (ImageView) ChatBot.getChatBotInstance().findViewById(R.id.convoTitle);
+        title.setImageResource(R.drawable.buttondefault);
+        LinearLayout topBar = (LinearLayout) ChatBot.getChatBotInstance().findViewById(R.id.topBar);
+        topBar.setBackgroundColor(Color.parseColor("#fdb813"));
+    }
+
+    public void Shop(View view) {
+        onBackPressed();
+        ImageView title = (ImageView) ChatBot.getChatBotInstance().findViewById(R.id.convoTitle);
+        title.setImageResource(R.drawable.title2);
+        LinearLayout topBar = (LinearLayout) ChatBot.getChatBotInstance().findViewById(R.id.topBar);
+        topBar.setBackgroundColor(Color.parseColor("#e6e0d0"));
     }
 }
