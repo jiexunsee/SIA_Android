@@ -8,5 +8,6 @@
     <color name="black_overlay">#66000000</color>
 
     <color name="gradient_start">#AF649E</color>
+    <color name="gradient_middle">#AA7B6C</color>
     <color name="gradient_end">#A98160</color>
 </resources>

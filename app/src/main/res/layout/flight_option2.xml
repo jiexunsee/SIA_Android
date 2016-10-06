@@ -32,7 +32,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="#00000000"
-                    android:text="Flight SQ 32"
+                    android:text="Flight SQ 2"
                     android:textColor="#a8a8a8"
                     android:textSize="10sp"
                     android:textStyle="bold" />
@@ -244,11 +244,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
-                android:text="Total price: $1971.80"
+                android:text="Total price: $1,971.80"
                 android:textSize="11sp"/>
 
-
         </LinearLayout>
+
     </FrameLayout>
 
 </LinearLayout>

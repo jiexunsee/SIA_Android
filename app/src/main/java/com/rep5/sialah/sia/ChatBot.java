@@ -454,14 +454,14 @@ public class ChatBot extends AppCompatActivity
         choice1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(PlaneChat.getPaymentRequest("Flight from Singapore to San Francisco", "05 December 2016, 09:20", "$1971.80")
+                startActivityForResult(PlaneChat.getPaymentRequest("Flight from Singapore to San Francisco", "05 December 2016, 20:00", "$2,031.00")
                         .getIntent(ChatBot.this), REQUEST_CODE);
             }
         });
         choice2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(PlaneChat.getPaymentRequest("Flight SQ32 - Singapore to San Francisco", "05 December 2016, 18:30", "$1971.80")
+                startActivityForResult(PlaneChat.getPaymentRequest("Flight SQ32 - Singapore to San Francisco", "05 December 2016, 18:30", "$1,971.80")
                         .getIntent(ChatBot.this), REQUEST_CODE);
             }
         });
