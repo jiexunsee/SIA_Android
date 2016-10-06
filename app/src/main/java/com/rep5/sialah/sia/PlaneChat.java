@@ -89,7 +89,7 @@ public class PlaneChat extends AppCompatActivity {
         return builder;
     }
 
-    public void GoBack() {
-        onBackPressed();
+    public void GoBack(View view) {
+        this.onBackPressed();
     }
 }

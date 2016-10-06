@@ -54,7 +54,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Show Ticket"
+                android:text="Show Boarding Pass"
                 android:textColor="#ffffff"
                 android:textSize="18sp"
                 android:background="#00000000"/>
@@ -126,8 +126,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            android:background="#00000000"
-            android:onClick="Shop">
+            android:background="#00000000">
 
             <ImageView
                 android:layout_width="wrap_content"

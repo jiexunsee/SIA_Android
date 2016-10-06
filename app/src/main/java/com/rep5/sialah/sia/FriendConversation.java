@@ -67,18 +67,12 @@ public class FriendConversation extends AppCompatActivity {
                 String text = editText.getText().toString();
                 editText.setText("");
 
-                TextView bubble = new TextView(getApplicationContext());
-                bubble.setTextSize(18);
-                bubble.setText(text);
-                bubble.setTextColor(Color.parseColor("#000000"));
-                bubble.setBackgroundResource(R.drawable.sendbubble);
-                LinearLayout.LayoutParams bubblelayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
-                bubblelayout.setMargins(200, 6, 6, 6);
-                bubblelayout.gravity = Gravity.RIGHT;
-                bubble.setLayoutParams(bubblelayout);
+                View messageSendView = getLayoutInflater().inflate(R.layout.message_send_view, null, false);
+                TextView textView = (TextView)messageSendView.findViewById(R.id.send_text_view);
+                textView.setText(text);
 
                 ViewGroup chatbubbles = (ViewGroup) findViewById(R.id.friendConversation);
-                chatbubbles.addView(bubble);
+                chatbubbles.addView(messageSendView);
 
                 Log.d(text, text);
 
@@ -108,19 +102,14 @@ public class FriendConversation extends AppCompatActivity {
     public void addReceivedMessage(SiaMessage siaMessage) {
         String message = siaMessage.getMessage();
 
-        TextView reply = new TextView(this);
-        reply.setTextSize(18);
-        reply.setText(message);
-        reply.setTextColor(Color.parseColor("#000000"));
-        reply.setBackgroundResource(R.drawable.receivebubble);
-        LinearLayout.LayoutParams replylayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
-        replylayout.setMargins(6, 6, 200, 6);
-        replylayout.gravity = Gravity.LEFT;
-        reply.setLayoutParams(replylayout);
-        ViewGroup chatbubbles = (ViewGroup) findViewById(R.id.friendConversation);
-        chatbubbles.addView(reply);
+        View messageReplyView = getLayoutInflater().inflate(R.layout.message_receive_view, null, false);
+        TextView messageTextView = (TextView) messageReplyView.findViewById(R.id.receive_text_view);
+        messageTextView.setText(message);
 
-        reply.setOnLongClickListener(new View.OnLongClickListener() {
+        ViewGroup chatbubbles = (ViewGroup) findViewById(R.id.friendConversation);
+        chatbubbles.addView(messageReplyView);
+
+        messageReplyView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MessageOptions.class);
@@ -130,7 +119,7 @@ public class FriendConversation extends AppCompatActivity {
         });
 
 
-        reply.setOnLongClickListener(new View.OnLongClickListener() {
+        messageReplyView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MessageOptions.class);
@@ -152,7 +141,7 @@ public class FriendConversation extends AppCompatActivity {
     }
 
     public void MustBuyWifi(View view) {
-        Toast.makeText(friendInstance, "To send attachments, please purchase the in-flight Wifi.", Toast.LENGTH_LONG).show();
+        if (!ChatBot.wifiState) Toast.makeText(friendInstance, "To send attachments, please purchase the in-flight Wifi.", Toast.LENGTH_LONG).show();
     }
 
     public void GoBack(View view) {

@@ -3,6 +3,7 @@ package com.rep5.sialah.sia;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -20,6 +21,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,6 +70,8 @@ public class ChatBot extends AppCompatActivity
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     static DatabaseReference mFirebaseDatabaseReference;
+//    private FirebaseRecyclerAdapter<FriendlyMessage, MessageViewHolder>
+//            mFirebaseAdapter;
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
     @Override
@@ -305,27 +309,68 @@ public class ChatBot extends AppCompatActivity
 
     public void addReceivedMessage(SiaMessage siaMessage) {
         String message = siaMessage.getMessage();
+
         StaticClass.messageHistory.add(new ChatBotMessage("Sia", message));
 
         ViewGroup chatbubbles = (ViewGroup) findViewById(R.id.conversation);
 
         if (siaMessage.getContext().getSiaData().getFakeBooking()) {
             FakeBooking(chatbubbles, message);
-        } else {
-            View messageReplyView = getLayoutInflater().inflate(R.layout.message_receive_view, null, false);
-            TextView messageTextView = (TextView)messageReplyView.findViewById(R.id.receive_text_view);
-            messageTextView.setText(message);
+        }
 
-            chatbubbles.addView(messageReplyView);
+        else {
 
-            messageReplyView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), MessageOptions.class);
-                    startActivity(intent);
-                    return true;
-                }
-            });
+            if (!siaMessage.getContext().getSiaData().getIsCusService()) {
+
+                ImageView title = (ImageView) ChatBot.getChatBotInstance().findViewById(R.id.convoTitle);
+                title.setImageResource(R.drawable.maintitle);
+                LinearLayout topBar = (LinearLayout) ChatBot.getChatBotInstance().findViewById(R.id.topBar);
+                topBar.setBackgroundResource(R.drawable.toolbar_gradient);
+                EditText editText = (EditText) ChatBot.getChatBotInstance().findViewById(R.id.messageEditText);
+                editText.setHint("Type a message to Sia");
+
+                View messageReplyView = getLayoutInflater().inflate(R.layout.message_receive_view, null, false);
+                TextView messageTextView = (TextView) messageReplyView.findViewById(R.id.receive_text_view);
+                messageTextView.setText(message);
+
+                chatbubbles.addView(messageReplyView);
+
+                messageReplyView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        Intent intent = new Intent(getApplicationContext(), MessageOptions.class);
+                        startActivity(intent);
+                        return true;
+                    }
+                });
+
+            }
+
+            else {
+
+                ImageView title = (ImageView) ChatBot.getChatBotInstance().findViewById(R.id.convoTitle);
+                title.setImageResource(R.drawable.title_customerservice);
+                LinearLayout topBar = (LinearLayout) ChatBot.getChatBotInstance().findViewById(R.id.topBar);
+                topBar.setBackgroundColor(Color.parseColor("#A98160"));
+                EditText editText = (EditText) ChatBot.getChatBotInstance().findViewById(R.id.messageEditText);
+                editText.setHint("Talk to Customer Service");
+
+                View messageReplyView = getLayoutInflater().inflate(R.layout.custserv_receive_view, null, false);
+                TextView messageTextView = (TextView) messageReplyView.findViewById(R.id.receive_text_view);
+                messageTextView.setText(message);
+
+                chatbubbles.addView(messageReplyView);
+
+                messageReplyView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        Intent intent = new Intent(getApplicationContext(), MessageOptions.class);
+                        startActivity(intent);
+                        return true;
+                    }
+                });
+            }
+
             if (siaMessage.getContext().getSiaData().getNeedsCustomerService()) {
                 StaticClass.SendMessageHistory();
 
@@ -392,8 +437,6 @@ public class ChatBot extends AppCompatActivity
     }
 
     public void ChooseFlight() {
-        TextView dateReply = new TextView(this);
-
         View messageReplyView = getLayoutInflater().inflate(R.layout.message_receive_view, null, false);
         TextView messageTextView = (TextView)messageReplyView.findViewById(R.id.receive_text_view);
         messageTextView.setText("I have found the following flights on your chosen date. Click to select one of them:");
@@ -443,6 +486,13 @@ public class ChatBot extends AppCompatActivity
                 );
 
                 PlaneChat.showPaymentDialog(this, "You have successfully purchased: Flight SQ32 - Singapore to San Francisco.").show();
+
+                View messageReplyView = getLayoutInflater().inflate(R.layout.message_receive_view, null, false);
+                TextView messageTextView = (TextView)messageReplyView.findViewById(R.id.receive_text_view);
+                messageTextView.setText("Hurray, you're on your way to San Francisco!");
+
+                ViewGroup chatbubbles = (ViewGroup) findViewById(R.id.conversation);
+                chatbubbles.addView(messageReplyView);
             }
         }
     }
