@@ -39,7 +39,7 @@
             android:maxHeight="24dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            android:src="@drawable/title2"
+            android:src="@drawable/title3"
             android:layout_weight="1" />
 
         <ImageView

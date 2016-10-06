@@ -152,7 +152,7 @@ public class FriendConversation extends AppCompatActivity {
     }
 
     public void MustBuyWifi(View view) {
-        Toast.makeText(friendInstance, "To send attachments, please purchase the in-flight Wifi.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(friendInstance, "To send attachments, please purchase the in-flight Wifi.", Toast.LENGTH_LONG).show();
     }
 
     public void GoBack(View view) {

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -30,16 +31,20 @@ public class DropDownMenu extends AppCompatActivity {
         StaticClass.SendMessageHistory();
         onBackPressed();
         ImageView title = (ImageView) ChatBot.getChatBotInstance().findViewById(R.id.convoTitle);
-        title.setImageResource(R.drawable.buttondefault);
+        title.setImageResource(R.drawable.customerservice);
         LinearLayout topBar = (LinearLayout) ChatBot.getChatBotInstance().findViewById(R.id.topBar);
         topBar.setBackgroundColor(Color.parseColor("#fdb813"));
+        EditText editText = (EditText) ChatBot.getChatBotInstance().findViewById(R.id.messageEditText);
+        editText.setHint("Talk to Customer Service");
     }
 
     public void Shop(View view) {
         onBackPressed();
         ImageView title = (ImageView) ChatBot.getChatBotInstance().findViewById(R.id.convoTitle);
-        title.setImageResource(R.drawable.title2);
+        title.setImageResource(R.drawable.title3);
         LinearLayout topBar = (LinearLayout) ChatBot.getChatBotInstance().findViewById(R.id.topBar);
         topBar.setBackgroundColor(Color.parseColor("#e6e0d0"));
+        EditText editText = (EditText) ChatBot.getChatBotInstance().findViewById(R.id.messageEditText);
+        editText.setHint("Type a message to Sia");
     }
 }

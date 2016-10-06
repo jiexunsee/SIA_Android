@@ -28,6 +28,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.braintreepayments.api.BraintreePaymentActivity;
+import com.braintreepayments.api.models.PaymentMethodNonce;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
@@ -52,6 +54,7 @@ public class ChatBot extends AppCompatActivity
     private static ChatBot instance;
     public static ImageView title;
     public static boolean wifiState = false;
+    private static final int REQUEST_CODE = 99;
 
 
     public static class MessageViewHolder extends RecyclerView.ViewHolder {
@@ -193,7 +196,7 @@ public class ChatBot extends AppCompatActivity
                 mMessageEditText.setText("");
 
                 TextView bubble = new TextView(getApplicationContext());
-                bubble.setTextSize(18);
+                bubble.setTextSize(17);
                 bubble.setText(text);
                 bubble.setTextColor(Color.parseColor("#000000"));
                 bubble.setBackgroundResource(R.drawable.sendbubble);
@@ -331,7 +334,7 @@ public class ChatBot extends AppCompatActivity
         StaticClass.messageHistory.add(new ChatBotMessage("Sia", message));
 
         TextView reply = new TextView(this);
-        reply.setTextSize(18);
+        reply.setTextSize(17);
         reply.setText(message);
         reply.setTextColor(Color.parseColor("#000000"));
         reply.setBackgroundResource(R.drawable.receivebubble);
@@ -395,7 +398,7 @@ public class ChatBot extends AppCompatActivity
 
     public void FakeBooking(LinearLayout.LayoutParams replylayout, ViewGroup chatbubbles) {
         TextView choose = new TextView(this);
-        choose.setTextSize(18);
+        choose.setTextSize(17);
         choose.setText("CHOOSE DATE");
         choose.setTextColor(Color.parseColor("#000000"));
         choose.setBackgroundResource(R.drawable.rounded_corners2);
@@ -423,7 +426,7 @@ public class ChatBot extends AppCompatActivity
 
     public void ChooseFlight() {
         TextView dateReply = new TextView(this);
-        dateReply.setTextSize(18);
+        dateReply.setTextSize(17);
         dateReply.setText("I have found the following flights on your chosen date. Click to select one of them:");
         dateReply.setTextColor(Color.parseColor("#000000"));
         dateReply.setBackgroundResource(R.drawable.receivebubble);
@@ -441,19 +444,19 @@ public class ChatBot extends AppCompatActivity
         View choice2 = getLayoutInflater().inflate(R.layout.flight_option2, null, false);
         chatbubbles.addView(choice2);
 
+
         choice1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Payment.class);
-                startActivity(intent);
+            public void onClick(View view) {
+                startActivityForResult(PlaneChat.getPaymentRequest("Flight from Singapore to San Francisco", "05 December 2016, 20:00", "$1971.80")
+                        .getIntent(ChatBot.this), REQUEST_CODE);
             }
         });
-
         choice2.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Payment.class);
-                startActivity(intent);
+            public void onClick(View view) {
+                startActivityForResult(PlaneChat.getPaymentRequest("Flight SQ32 - Singapore to San Francisco", "05 December 2016, 20:00", "$1971.80")
+                        .getIntent(ChatBot.this), REQUEST_CODE);
             }
         });
 
@@ -466,6 +469,19 @@ public class ChatBot extends AppCompatActivity
             }
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                PaymentMethodNonce paymentMethodNonce = data.getParcelableExtra(
+                        BraintreePaymentActivity.EXTRA_PAYMENT_METHOD_NONCE
+                );
+
+                PlaneChat.showPaymentDialog(this, "You have successfully purchased: Flight SQ32 - Singapore to San Francisco.").show();
+            }
+        }
     }
 
 

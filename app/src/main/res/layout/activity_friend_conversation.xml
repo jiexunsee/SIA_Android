@@ -30,14 +30,14 @@
             android:background="#00000000"
             android:onClick="GoBack"/>
 
-        <TextView
+        <ImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Chat with Heok Hong"
-            android:textSize="20sp"
-            android:textColor="#ffffff"
+            android:maxHeight="24dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
             android:layout_weight="1"
-            android:gravity="center"/>
+            android:src="@drawable/title_mummy"/>
 
     </LinearLayout>
 

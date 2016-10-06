@@ -69,7 +69,7 @@ public class PlaneChat extends AppCompatActivity {
         }
     }
 
-    public PaymentRequest getPaymentRequest(String itemName, String itemDescription, String price) {
+    public static PaymentRequest getPaymentRequest(String itemName, String itemDescription, String price) {
         PaymentRequest paymentRequest = new PaymentRequest()
                 .primaryDescription(itemName)
                 .secondaryDescription(itemDescription)
@@ -78,7 +78,7 @@ public class PlaneChat extends AppCompatActivity {
         return paymentRequest;
     }
 
-    public AlertDialog.Builder showPaymentDialog(Context context, String text) {
+    public static AlertDialog.Builder showPaymentDialog(Context context, String text) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(text)
                 .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
