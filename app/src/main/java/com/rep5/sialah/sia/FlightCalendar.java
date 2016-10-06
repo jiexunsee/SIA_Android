@@ -24,5 +24,6 @@ public class FlightCalendar extends AppCompatActivity {
 
     public void GoBack(View view) {
         this.onBackPressed();
+        ChatBot.getChatBotInstance().ChooseFlight();
     }
 }

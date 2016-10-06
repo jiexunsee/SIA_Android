@@ -22,13 +22,13 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/showDropDownMenu"
             android:maxWidth="36dp"
             android:maxHeight="36dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             android:src="@drawable/menulines2"
-            android:background="#00000000" />
+            android:background="#00000000"
+            android:onClick="GoBack"/>
 
         <TextView
             android:layout_width="0dp"
@@ -67,6 +67,17 @@
         android:orientation="horizontal"
         android:padding="8dp">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="48dp"
+            android:maxHeight="48dp"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
+            android:src="@drawable/bookmark"
+            android:onClick="MustBuyWifi"/>
+
         <EditText
             android:id="@+id/editText"
             android:layout_width="0dp"
@@ -75,13 +86,19 @@
             android:layout_weight="1"
             android:hint="Type a message"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:maxWidth="48dp"
+            android:maxHeight="48dp"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
             android:enabled="false"
-            android:text="SEND"/>
+            android:text="SEND"
+            android:src="@drawable/buttondefault"/>
 
     </LinearLayout>
 

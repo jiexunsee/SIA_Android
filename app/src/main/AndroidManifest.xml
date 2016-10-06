@@ -59,6 +59,8 @@
             android:name=".FlightCalendar"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Translucent" />
+        <activity android:name=".FriendConversation" />
+        <activity android:name=".Payment"></activity>
         <activity android:name=".FriendConversation"></activity>
         <activity android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
             android:launchMode="singleTask">
