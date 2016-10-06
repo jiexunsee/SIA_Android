@@ -6,9 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 public class DropDownMenu extends AppCompatActivity {
 
@@ -30,21 +33,22 @@ public class DropDownMenu extends AppCompatActivity {
     public void ContactCustServ(View view) {
         StaticClass.SendMessageHistory();
         onBackPressed();
-        ImageView title = (ImageView) ChatBot.getChatBotInstance().findViewById(R.id.convoTitle);
-        title.setImageResource(R.drawable.customerservice);
-        LinearLayout topBar = (LinearLayout) ChatBot.getChatBotInstance().findViewById(R.id.topBar);
-        topBar.setBackgroundColor(Color.parseColor("#fdb813"));
-        EditText editText = (EditText) ChatBot.getChatBotInstance().findViewById(R.id.messageEditText);
-        editText.setHint("Talk to Customer Service");
+
+        View messageReplyView = getLayoutInflater().inflate(R.layout.message_receive_view, null, false);
+        TextView messageTextView = (TextView) messageReplyView.findViewById(R.id.receive_text_view);
+        messageTextView.setText("I will now contact a service operator to take over. Please hold for a moment while I patch you through.");
+
+        ViewGroup chatbubbles = (ViewGroup) ChatBot.getChatBotInstance().findViewById(R.id.conversation);
+        chatbubbles.addView(messageReplyView);
+
+        final ScrollView scroll = (ScrollView) ChatBot.getChatBotInstance().findViewById(R.id.scrollView);
+        scroll.post(new Runnable()
+        {
+            public void run()
+            {
+                scroll.fullScroll(View.FOCUS_DOWN);
+            }
+        });
     }
 
-    public void Shop(View view) {
-        onBackPressed();
-        ImageView title = (ImageView) ChatBot.getChatBotInstance().findViewById(R.id.convoTitle);
-        title.setImageResource(R.drawable.title3);
-        LinearLayout topBar = (LinearLayout) ChatBot.getChatBotInstance().findViewById(R.id.topBar);
-        topBar.setBackgroundColor(Color.parseColor("#e6e0d0"));
-        EditText editText = (EditText) ChatBot.getChatBotInstance().findViewById(R.id.messageEditText);
-        editText.setHint("Type a message to Sia");
-    }
 }

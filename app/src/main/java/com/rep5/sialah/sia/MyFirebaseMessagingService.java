@@ -34,7 +34,7 @@ import static com.rep5.sialah.sia.ChatBot.mFirebaseDatabaseReference;
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFMService";
-    private FirebaseRecyclerAdapter<FriendlyMessage, ChatBot.MessageViewHolder> mFirebaseAdapterreceive;
+    //private FirebaseRecyclerAdapter<FriendlyMessage, ChatBot.MessageViewHolder> mFirebaseAdapterreceive;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {

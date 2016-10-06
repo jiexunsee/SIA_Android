@@ -12,13 +12,10 @@ public class FlightCalendar extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flight_calendar);
 
-        initializeCalendar();
+     //   initializeCalendar();
     }
 
-    public void initializeCalendar() {
-        CalendarView calendar = (CalendarView) findViewById(R.id.calendar);
-    }
-
+    //
 
 
 
