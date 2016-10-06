@@ -145,6 +145,8 @@ public class ChatBot extends AppCompatActivity
 
 
         sendButton = (ImageButton) findViewById(R.id.realSendButton);
+        sendButton.setEnabled(false);
+        sendButton.setImageResource(R.drawable.sendbutton_faded);
 
         mMessageEditText = (EditText) findViewById(R.id.messageEditText);
         mMessageEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mSharedPreferences
@@ -186,6 +188,15 @@ public class ChatBot extends AppCompatActivity
 
                 ViewGroup chatbubbles = (ViewGroup) findViewById(R.id.conversation);
                 chatbubbles.addView(messageSendView);
+
+                messageSendView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        Intent intent = new Intent(getApplicationContext(), MessageOptions.class);
+                        startActivity(intent);
+                        return true;
+                    }
+                });
 
                 Log.d(text, text);
 
@@ -444,6 +455,15 @@ public class ChatBot extends AppCompatActivity
         ViewGroup chatbubbles = (ViewGroup) findViewById(R.id.conversation);
         chatbubbles.addView(messageReplyView);
 
+        messageReplyView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MessageOptions.class);
+                startActivity(intent);
+                return true;
+            }
+        });
+
         View choice1 = getLayoutInflater().inflate(R.layout.flight_option1, null, false);
         chatbubbles.addView(choice1);
 
@@ -458,11 +478,30 @@ public class ChatBot extends AppCompatActivity
                         .getIntent(ChatBot.this), REQUEST_CODE);
             }
         });
+
+        choice1.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MessageOptions.class);
+                startActivity(intent);
+                return true;
+            }
+        });
+
         choice2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivityForResult(PlaneChat.getPaymentRequest("Flight SQ32 - Singapore to San Francisco", "05 December 2016, 18:30", "$1,971.80")
                         .getIntent(ChatBot.this), REQUEST_CODE);
+            }
+        });
+
+        choice2.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MessageOptions.class);
+                startActivity(intent);
+                return true;
             }
         });
 
@@ -491,8 +530,26 @@ public class ChatBot extends AppCompatActivity
                 TextView messageTextView = (TextView)messageReplyView.findViewById(R.id.receive_text_view);
                 messageTextView.setText("Hurray, you're on your way to San Francisco!");
 
+                messageReplyView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        Intent intent = new Intent(getApplicationContext(), MessageOptions.class);
+                        startActivity(intent);
+                        return true;
+                    }
+                });
+
                 ViewGroup chatbubbles = (ViewGroup) findViewById(R.id.conversation);
                 chatbubbles.addView(messageReplyView);
+
+                final ScrollView scroll = (ScrollView) findViewById(R.id.scrollView);
+                scroll.post(new Runnable()
+                {
+                    public void run()
+                    {
+                        scroll.fullScroll(View.FOCUS_DOWN);
+                    }
+                });
             }
         }
     }

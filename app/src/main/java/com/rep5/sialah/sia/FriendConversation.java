@@ -1,20 +1,16 @@
 package com.rep5.sialah.sia;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -104,6 +100,8 @@ public class FriendConversation extends AppCompatActivity {
 
         View messageReplyView = getLayoutInflater().inflate(R.layout.message_receive_view, null, false);
         TextView messageTextView = (TextView) messageReplyView.findViewById(R.id.receive_text_view);
+        ImageView pic = (ImageView) messageReplyView.findViewById(R.id.senderLogo);
+        pic.setImageResource(R.drawable.mum_face);
         messageTextView.setText(message);
 
         ViewGroup chatbubbles = (ViewGroup) findViewById(R.id.friendConversation);
