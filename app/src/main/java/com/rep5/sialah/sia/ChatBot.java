@@ -51,7 +51,6 @@ public class ChatBot extends AppCompatActivity
     public static boolean wifiState = false;
     private static final int REQUEST_CODE = 99;
 
-
     private static final String TAG = "ChatBot";
     public static final String MESSAGES_CHILD = "messages";
     private static final int REQUEST_INVITE = 1;
@@ -171,6 +170,7 @@ public class ChatBot extends AppCompatActivity
             public void afterTextChanged(Editable editable) {
             }
         });
+
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
