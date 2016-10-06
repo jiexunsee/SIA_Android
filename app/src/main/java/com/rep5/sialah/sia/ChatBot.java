@@ -192,11 +192,7 @@ public class ChatBot extends AppCompatActivity
                 //DISPLAY MESSAGE
                 mMessageEditText.setText("");
 
-                TextView bubble = new TextView(getApplicationContext());
-                bubble.setTextSize(18);
-                bubble.setText(text);
-                bubble.setTextColor(Color.parseColor("#000000"));
-                bubble.setBackgroundResource(R.drawable.sendbubble);
+                TextView bubble = getTextView(text, 1);
                 LinearLayout.LayoutParams bubblelayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
                 bubblelayout.setMargins(200, 6, 6, 6);
                 bubblelayout.gravity = Gravity.RIGHT;
@@ -330,11 +326,7 @@ public class ChatBot extends AppCompatActivity
         String message = siaMessage.getMessage();
         StaticClass.messageHistory.add(new ChatBotMessage("Sia", message));
 
-        TextView reply = new TextView(this);
-        reply.setTextSize(18);
-        reply.setText(message);
-        reply.setTextColor(Color.parseColor("#000000"));
-        reply.setBackgroundResource(R.drawable.receivebubble);
+        TextView reply = getTextView(message, 0);
         LinearLayout.LayoutParams replylayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
         replylayout.setMargins(6, 6, 200, 6);
         replylayout.gravity = Gravity.LEFT;
@@ -394,11 +386,7 @@ public class ChatBot extends AppCompatActivity
 
 
     public void FakeBooking(LinearLayout.LayoutParams replylayout, ViewGroup chatbubbles) {
-        TextView choose = new TextView(this);
-        choose.setTextSize(18);
-        choose.setText("CHOOSE DATE");
-        choose.setTextColor(Color.parseColor("#000000"));
-        choose.setBackgroundResource(R.drawable.rounded_corners2);
+        TextView choose = getTextView("CHOOSE DATE", 2);
         choose.setLayoutParams(replylayout);
         chatbubbles.addView(choose);
 
@@ -422,11 +410,7 @@ public class ChatBot extends AppCompatActivity
     }
 
     public void ChooseFlight() {
-        TextView dateReply = new TextView(this);
-        dateReply.setTextSize(18);
-        dateReply.setText("I have found the following flights on your chosen date. Click to select one of them:");
-        dateReply.setTextColor(Color.parseColor("#000000"));
-        dateReply.setBackgroundResource(R.drawable.receivebubble);
+        TextView dateReply = getTextView("I have found the following flights on your chosen date. Click to select one of them:", 0);
         LinearLayout.LayoutParams replylayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
         replylayout.setMargins(6, 6, 200, 6);
         replylayout.gravity = Gravity.LEFT;
@@ -466,6 +450,29 @@ public class ChatBot extends AppCompatActivity
             }
         });
 
+    }
+
+    private TextView getTextView(String text, int type) {
+        TextView dateReply = new TextView(this);
+        dateReply.setTextSize(17);
+        dateReply.setText(text);
+        dateReply.setTextColor(Color.parseColor("#000000"));
+
+        switch (type) {
+            case 0:
+                dateReply.setBackgroundResource(R.drawable.receivebubble);
+                break;
+
+            case 1:
+                dateReply.setBackgroundResource(R.drawable.sendbubble);
+                break;
+
+            case 2:
+                dateReply.setBackgroundResource(R.drawable.rounded_corners2);
+        }
+
+
+        return dateReply;
     }
 
 
