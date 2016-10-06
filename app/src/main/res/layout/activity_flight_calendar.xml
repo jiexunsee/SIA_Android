@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/calendar"
-            android:background="#ebf3f7"
+            android:background="@color/bt_white"
             android:firstDayOfWeek="1" />
 
         <LinearLayout

@@ -15,26 +15,15 @@
  */
 package com.rep5.sialah.sia;
 
-import android.app.Activity;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-
-import static com.rep5.sialah.sia.ChatBot.MESSAGES_CHILD;
-import static com.rep5.sialah.sia.ChatBot.mFirebaseDatabaseReference;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFMService";
-    private FirebaseRecyclerAdapter<FriendlyMessage, ChatBot.MessageViewHolder> mFirebaseAdapterreceive;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
@@ -27,7 +26,6 @@ import android.widget.Toast;
 
 import com.braintreepayments.api.BraintreePaymentActivity;
 import com.braintreepayments.api.models.PaymentMethodNonce;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -43,8 +41,6 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class ChatBot extends AppCompatActivity
         implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -53,19 +49,6 @@ public class ChatBot extends AppCompatActivity
     public static boolean wifiState = false;
     private static final int REQUEST_CODE = 99;
 
-
-    public static class MessageViewHolder extends RecyclerView.ViewHolder {
-        public TextView messageTextView;
-        public TextView messengerTextView;
-        public CircleImageView messengerImageView;
-
-        public MessageViewHolder (View v) {
-            super(v);
-            messageTextView = (TextView) itemView.findViewById(R.id.messageTextView);
-            messengerTextView = (TextView) itemView.findViewById(R.id.messengerTextView);
-            messengerImageView = (CircleImageView) itemView.findViewById(R.id.messengerImageView);
-        }
-    }
 
     private static final String TAG = "ChatBot";
     public static final String MESSAGES_CHILD = "messages";
@@ -85,8 +68,6 @@ public class ChatBot extends AppCompatActivity
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     static DatabaseReference mFirebaseDatabaseReference;
-    private FirebaseRecyclerAdapter<FriendlyMessage, MessageViewHolder>
-            mFirebaseAdapter;
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
     @Override
@@ -430,14 +411,14 @@ public class ChatBot extends AppCompatActivity
         choice1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(PlaneChat.getPaymentRequest("Flight from Singapore to San Francisco", "05 December 2016, 20:00", "$1971.80")
+                startActivityForResult(PlaneChat.getPaymentRequest("Flight from Singapore to San Francisco", "05 December 2016, 09:20", "$1971.80")
                         .getIntent(ChatBot.this), REQUEST_CODE);
             }
         });
         choice2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(PlaneChat.getPaymentRequest("Flight SQ32 - Singapore to San Francisco", "05 December 2016, 20:00", "$1971.80")
+                startActivityForResult(PlaneChat.getPaymentRequest("Flight SQ32 - Singapore to San Francisco", "05 December 2016, 18:30", "$1971.80")
                         .getIntent(ChatBot.this), REQUEST_CODE);
             }
         });
