@@ -6,4 +6,7 @@
     <color name="colorTitle">#ffffff</color>
 
     <color name="black_overlay">#66000000</color>
+
+    <color name="gradient_start">#AF649E</color>
+    <color name="gradient_end">#A98160</color>
 </resources>

@@ -5,15 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="0dp"
+    android:layout_margin="0dp"
     android:orientation="vertical"
-    tools:context="com.rep5.sialah.sia.ChatBot"
-    android:background="@drawable/attachment">
+    tools:context="com.rep5.sialah.sia.ChatBot">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
-        android:background="#e6e0d0"
+        android:background="@drawable/toolbar_gradient"
         android:gravity="center"
         android:id="@+id/topBar">
 
@@ -23,9 +23,9 @@
             android:padding="13dp"
             android:paddingLeft="14dp"
             android:id="@+id/showDropDownMenu"
-            android:src="@drawable/menulines2"
+            android:src="@drawable/mainmenu"
             android:onClick="ShowDropDownMenu"
-            android:background="#00000000" />
+            android:visibility="visible"/>
 
         <ImageView
             android:id="@+id/convoTitle"
@@ -34,7 +34,7 @@
             android:maxHeight="26dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            android:src="@drawable/title_v3"
+            android:src="@drawable/maintitle"
             android:layout_weight="1" />
 
         <ImageView
@@ -46,31 +46,43 @@
             android:maxHeight="36dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            android:src="@drawable/planechat2"
+            android:src="@drawable/planechat"
             android:onClick="ShowPlaneChat"
-            android:background="#00000000" />
+            android:visibility="visible"/>
 
     </LinearLayout>
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignParentTop="true"
-        android:id="@+id/scrollView"
-        android:layout_weight="1"
-        android:background="@android:color/transparent">
-
-        <LinearLayout
+        android:layout_weight="1">
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:id="@+id/conversation"
-            android:padding="8dp">
+            android:layout_alignParentTop="true"
+            android:id="@+id/scrollView"
+            android:layout_weight="1">
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/conversation"
+                android:padding="8dp">
 
-    </ScrollView>
+            </LinearLayout>
+
+        </ScrollView>
+        <ImageView
+            android:src="@drawable/siabglogo"
+            android:layout_width="1200px"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+
     
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -80,18 +92,6 @@
         android:background="#FFFFFF"
         android:padding="6dp"
         android:paddingBottom="10dp">
-
-        <ImageButton
-            android:layout_width="36dp"
-            android:layout_height="40dp"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
-            android:background="#00000000"
-            android:src="@drawable/smileyface"
-            android:enabled="false"
-            android:layout_gravity="bottom"/>
 
         <ImageButton
             android:layout_width="30dp"
@@ -104,6 +104,19 @@
             android:enabled="false"
             android:layout_gravity="bottom"
             android:visibility="gone"/>
+
+        <ImageButton
+            android:layout_width="36dp"
+            android:layout_height="40dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
+            android:src="@drawable/emoji"
+            android:enabled="false"
+            android:layout_gravity="bottom"
+            android:id="@+id/imageButton" />
 
         <FrameLayout
             android:layout_width="0dp"

@@ -3,7 +3,6 @@ package com.rep5.sialah.sia;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -13,7 +12,6 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,7 +21,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -96,6 +93,8 @@ public class ChatBot extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        getWindow().setBackgroundDrawableResource(R.drawable.siabglogo);
 
         SendToken.send();
 
@@ -195,18 +194,12 @@ public class ChatBot extends AppCompatActivity
                 //DISPLAY MESSAGE
                 mMessageEditText.setText("");
 
-                TextView bubble = new TextView(getApplicationContext());
-                bubble.setTextSize(17);
-                bubble.setText(text);
-                bubble.setTextColor(Color.parseColor("#000000"));
-                bubble.setBackgroundResource(R.drawable.sendbubble);
-                LinearLayout.LayoutParams bubblelayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
-                bubblelayout.setMargins(200, 6, 6, 6);
-                bubblelayout.gravity = Gravity.RIGHT;
-                bubble.setLayoutParams(bubblelayout);
+                View messageSendView = getLayoutInflater().inflate(R.layout.message_send_view, null, false);
+                TextView textView = (TextView)messageSendView.findViewById(R.id.send_text_view);
+                textView.setText(text);
 
                 ViewGroup chatbubbles = (ViewGroup) findViewById(R.id.conversation);
-                chatbubbles.addView(bubble);
+                chatbubbles.addView(messageSendView);
 
                 Log.d(text, text);
 
@@ -333,46 +326,30 @@ public class ChatBot extends AppCompatActivity
         String message = siaMessage.getMessage();
         StaticClass.messageHistory.add(new ChatBotMessage("Sia", message));
 
-        TextView reply = new TextView(this);
-        reply.setTextSize(17);
-        reply.setText(message);
-        reply.setTextColor(Color.parseColor("#000000"));
-        reply.setBackgroundResource(R.drawable.receivebubble);
-        LinearLayout.LayoutParams replylayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
-        replylayout.setMargins(6, 6, 200, 6);
-        replylayout.gravity = Gravity.LEFT;
-        reply.setLayoutParams(replylayout);
         ViewGroup chatbubbles = (ViewGroup) findViewById(R.id.conversation);
-        chatbubbles.addView(reply);
-
-        reply.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MessageOptions.class);
-                startActivity(intent);
-                return true;
-            }
-        });
 
         if (siaMessage.getContext().getSiaData().getFakeBooking()) {
-            FakeBooking(replylayout, chatbubbles);
-        }
+            FakeBooking(chatbubbles, message);
+        } else {
+            View messageReplyView = getLayoutInflater().inflate(R.layout.message_receive_view, null, false);
+            TextView messageTextView = (TextView)messageReplyView.findViewById(R.id.receive_text_view);
+            messageTextView.setText(message);
 
-        if (siaMessage.getContext().getSiaData().getNeedsCustomerService()) {
-            StaticClass.SendMessageHistory();
+            chatbubbles.addView(messageReplyView);
 
-        }
+            messageReplyView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), MessageOptions.class);
+                    startActivity(intent);
+                    return true;
+                }
+            });
+            if (siaMessage.getContext().getSiaData().getNeedsCustomerService()) {
+                StaticClass.SendMessageHistory();
 
-
-        reply.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MessageOptions.class);
-                startActivity(intent);
-                return true;
             }
-        });
-
+        }
 
         final ScrollView scroll = (ScrollView) findViewById(R.id.scrollView);
         scroll.post(new Runnable()
@@ -396,20 +373,29 @@ public class ChatBot extends AppCompatActivity
     }
 
 
-    public void FakeBooking(LinearLayout.LayoutParams replylayout, ViewGroup chatbubbles) {
-        TextView choose = new TextView(this);
-        choose.setTextSize(17);
-        choose.setText("CHOOSE DATE");
-        choose.setTextColor(Color.parseColor("#000000"));
-        choose.setBackgroundResource(R.drawable.rounded_corners2);
-        choose.setLayoutParams(replylayout);
-        chatbubbles.addView(choose);
+    public void FakeBooking(ViewGroup chatbubbles, String message) {
+        View chooseButtonView = getLayoutInflater().inflate(R.layout.message_single_button_view, null, false);
+        TextView messageTextView = (TextView)chooseButtonView.findViewById(R.id.message_single_action_text_view);
+        TextView chooseButton = (TextView)chooseButtonView.findViewById(R.id.message_single_action_button);
 
-        choose.setOnClickListener(new View.OnClickListener() {
+        messageTextView.setText(message);
+
+        chatbubbles.addView(chooseButtonView);
+
+        chooseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), FlightCalendar.class);
                 startActivity(intent);
+            }
+        });
+
+        messageTextView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MessageOptions.class);
+                startActivity(intent);
+                return true;
             }
         });
 
@@ -426,17 +412,13 @@ public class ChatBot extends AppCompatActivity
 
     public void ChooseFlight() {
         TextView dateReply = new TextView(this);
-        dateReply.setTextSize(17);
-        dateReply.setText("I have found the following flights on your chosen date. Click to select one of them:");
-        dateReply.setTextColor(Color.parseColor("#000000"));
-        dateReply.setBackgroundResource(R.drawable.receivebubble);
-        LinearLayout.LayoutParams replylayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
-        replylayout.setMargins(6, 6, 200, 6);
-        replylayout.gravity = Gravity.LEFT;
-        dateReply.setLayoutParams(replylayout);
+
+        View messageReplyView = getLayoutInflater().inflate(R.layout.message_receive_view, null, false);
+        TextView messageTextView = (TextView)messageReplyView.findViewById(R.id.receive_text_view);
+        messageTextView.setText("I have found the following flights on your chosen date. Click to select one of them:");
 
         ViewGroup chatbubbles = (ViewGroup) findViewById(R.id.conversation);
-        chatbubbles.addView(dateReply);
+        chatbubbles.addView(messageReplyView);
 
         View choice1 = getLayoutInflater().inflate(R.layout.flight_option1, null, false);
         chatbubbles.addView(choice1);

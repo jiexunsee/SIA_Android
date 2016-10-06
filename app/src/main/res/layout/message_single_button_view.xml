@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="6dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/message_single_action_text_view"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:padding="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="two weeks ago, we launched our Kickstarter campaign and by now we have already collected $180.000. Thanks to you and many other time-tracking "
+            android:layout_gravity="left"
+            android:textSize="16sp"
+            android:background="@drawable/rounded_top_half_view"/>
+
+        <TextView
+            android:id="@+id/message_single_action_button"
+            android:text="Choose Date"
+            style="@style/TextAppearance.AppCompat.Button"
+            android:textSize="15sp"
+            android:textAllCaps="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="12dp"
+            android:textColor="#486DB5"
+            android:background="@drawable/rounded_bottom_half_view"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

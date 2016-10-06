@@ -6,7 +6,7 @@
         <!--<item name="colorPrimary">@color/colorPrimary</item>-->
         <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
         <item name="colorAccent">#5c3c32</item>
-        <item name="colorPrimaryDark">#ccac00</item>
+        <item name="colorPrimaryDark">#AE7586</item>
     </style>
 
     <style name="Theme.AppCompat.Translucent" parent="Theme.AppCompat.Light.NoActionBar">

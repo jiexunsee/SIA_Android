@@ -12,7 +12,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ChatBot"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -61,7 +62,6 @@
             android:theme="@style/Theme.AppCompat.Translucent" />
         <activity android:name=".FriendConversation" />
         <activity android:name=".Payment"></activity>
-        <activity android:name=".FriendConversation"></activity>
         <activity android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
             android:launchMode="singleTask">
             <intent-filter>
