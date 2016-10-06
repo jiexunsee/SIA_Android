@@ -4,18 +4,16 @@
     android:id="@+id/activity_friend_conversation"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="0dp"
-    android:paddingLeft="0dp"
-    android:paddingRight="0dp"
-    android:paddingTop="0dp"
+    android:padding="0dp"
     android:orientation="vertical"
     tools:context="com.rep5.sialah.sia.ChatBot">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:padding="4dp"
         android:orientation="horizontal"
-        android:background="#ae7586"
+        android:background="@drawable/toolbar_gradient_opposite"
         android:gravity="center">
 
         <ImageButton

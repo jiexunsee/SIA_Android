@@ -12,7 +12,7 @@
         android:gravity="center"
         android:padding="4dp"
         android:id="@+id/topbar"
-        android:background="#ae7586">
+        android:background="@drawable/toolbar_gradient_opposite">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -73,13 +73,14 @@
                 android:orientation="horizontal"
                 android:gravity="left"
                 android:id="@+id/contact"
-                android:onClick="OpenConversation">
+                android:onClick="OpenConversation"
+                android:layout_marginTop="-6dp">
 
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_weight="0"
-                    android:src="@drawable/ic_account_circle_black_36dp"
+                    android:src="@drawable/mum_face"
                     android:id="@+id/profile_pic"
                     android:layout_margin="10dp" />
 
@@ -110,17 +111,149 @@
 
             </LinearLayout>
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:src="@drawable/line"
+                android:scaleType="fitXY" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="left">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="0"
+                    android:src="@drawable/yux_face"
+                    android:layout_margin="10dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Yu Xuan"
+                        android:textSize="18sp"
+                        android:padding="4dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="(no recent message to display)"
+                        android:textSize="13sp"
+                        android:paddingLeft="4dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:src="@drawable/line"
+                android:scaleType="fitXY" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="left">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="0"
+                    android:src="@drawable/sean_face"
+                    android:layout_margin="10dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sean"
+                        android:textSize="18sp"
+                        android:padding="4dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="(no recent message to display)"
+                        android:textSize="13sp"
+                        android:paddingLeft="4dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:src="@drawable/line"
+                android:scaleType="fitXY" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="left">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="0"
+                    android:src="@drawable/yang_face"
+                    android:layout_margin="10dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ang Yang"
+                        android:textSize="18sp"
+                        android:padding="4dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="(no recent message to display)"
+                        android:textSize="13sp"
+                        android:paddingLeft="4dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
+
     </ScrollView>
     <TextView
         android:id="@+id/purchaseWIFIButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black_overlay"
+        android:background="#C9B0A7"
         android:padding="16dp"
         android:textAlignment="center"
         style="@style/Base.TextAppearance.AppCompat.Button"
-        android:text="Purchase OnAir WIFI"/>
+        android:text="Purchase In-Flight WIFI"/>
 
 </LinearLayout>
