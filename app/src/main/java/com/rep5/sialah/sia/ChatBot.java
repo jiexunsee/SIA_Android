@@ -169,7 +169,6 @@ public class ChatBot extends AppCompatActivity
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.toString().trim().length() > 0) {
-                    Log.d("EDITBOX", Integer.toString(charSequence.toString().trim().length()));
                     sendButton.setEnabled(true);
                     sendButton.setImageResource(R.drawable.plane);
                 } else {
@@ -411,12 +410,29 @@ public class ChatBot extends AppCompatActivity
             }
         });
 
+        final ScrollView scroll = (ScrollView) findViewById(R.id.scrollView);
+        scroll.post(new Runnable()
+        {
+            public void run()
+            {
+                scroll.fullScroll(View.FOCUS_DOWN);
+            }
+        });
+
+    }
+
+    public void ChooseFlight() {
         TextView dateReply = new TextView(this);
         dateReply.setTextSize(18);
         dateReply.setText("I have found the following flights on your chosen date. Click to select one of them:");
         dateReply.setTextColor(Color.parseColor("#000000"));
         dateReply.setBackgroundResource(R.drawable.receivebubble);
+        LinearLayout.LayoutParams replylayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
+        replylayout.setMargins(6, 6, 200, 6);
+        replylayout.gravity = Gravity.LEFT;
         dateReply.setLayoutParams(replylayout);
+
+        ViewGroup chatbubbles = (ViewGroup) findViewById(R.id.conversation);
         chatbubbles.addView(dateReply);
 
         View choice1 = getLayoutInflater().inflate(R.layout.flight_option1, null, false);
@@ -433,8 +449,24 @@ public class ChatBot extends AppCompatActivity
             }
         });
 
-    }
+        choice2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Payment.class);
+                startActivity(intent);
+            }
+        });
 
+        final ScrollView scroll = (ScrollView) findViewById(R.id.scrollView);
+        scroll.post(new Runnable()
+        {
+            public void run()
+            {
+                scroll.fullScroll(View.FOCUS_DOWN);
+            }
+        });
+
+    }
 
 
     public static ChatBot getChatBotInstance() {

@@ -13,9 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -24,7 +26,7 @@ import javax.ws.rs.core.MediaType;
 public class FriendConversation extends AppCompatActivity {
 
     private static FriendConversation friendInstance;
-    private Button sendButton;
+    private ImageButton sendButton;
     private EditText editText;
 
     @Override
@@ -36,7 +38,7 @@ public class FriendConversation extends AppCompatActivity {
 
 
         editText = (EditText) findViewById(R.id.editText);
-        sendButton = (Button) findViewById(R.id.send);
+        sendButton = (ImageButton) findViewById(R.id.send);
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -46,8 +48,10 @@ public class FriendConversation extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.toString().trim().length() > 0) {
                     sendButton.setEnabled(true);
+                    sendButton.setImageResource(R.drawable.plane);
                 } else {
                     sendButton.setEnabled(false);
+                    sendButton.setImageResource(R.drawable.buttondefault);
                 }
             }
 
@@ -145,6 +149,14 @@ public class FriendConversation extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void MustBuyWifi(View view) {
+        Toast.makeText(friendInstance, "To send attachments, please purchase the in-flight Wifi.", Toast.LENGTH_SHORT).show();
+    }
+
+    public void GoBack(View view) {
+        onBackPressed();
     }
 
     public static FriendConversation getInstance() {
