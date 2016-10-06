@@ -170,10 +170,10 @@ public class ChatBot extends AppCompatActivity
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.toString().trim().length() > 0) {
                     sendButton.setEnabled(true);
-                    sendButton.setImageResource(R.drawable.plane);
+                    sendButton.setImageResource(R.drawable.sendbutton);
                 } else {
                     sendButton.setEnabled(false);
-                    sendButton.setImageResource(R.drawable.buttondefault);
+                    sendButton.setImageResource(R.drawable.sendbutton_faded);
                 }
             }
 
