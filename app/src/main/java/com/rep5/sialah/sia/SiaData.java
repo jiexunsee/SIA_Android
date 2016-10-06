@@ -1,5 +1,6 @@
 package com.rep5.sialah.sia;
 
+
 /**
  * Created by low on 1/10/16 5:45 AM.
  */
@@ -19,15 +20,10 @@ public class SiaData {
     private String customerRequestType;
     private String customerRequestItem;
 
-    //stores previous convo for customer service, jx to set this value
-    //store from earliest to latest
-    //clear after 1st contact to reduce payload
-    //prepend each string with source of msg, use "usr-Whatever message" and "bot-Whatever message"
-//    private String[] pastFiveConvo;
-
     //to be set by jx
 //    private boolean talkingToCustomerService;
     private Boolean needsCustomerService;
+    private Boolean isCusService;
 
     private Boolean planeChat;
 
@@ -36,6 +32,14 @@ public class SiaData {
     private boolean inFlight;
 
     public SiaData() {
+    }
+
+    public Boolean getIsCusService() {
+        return isCusService;
+    }
+
+    public void setIsCusService(Boolean cusService) {
+        isCusService = cusService;
     }
 
     public Boolean getNeedsCustomerService() {
@@ -85,32 +89,7 @@ public class SiaData {
     public void setFakeBooking(boolean fakeBooking) {
         this.fakeBooking = fakeBooking;
     }
-    /*
-        public String getSeatNumber() {
-            return seatNumber;
-        }
-        public void setSeatNumber(String seatNumber) {
-            this.seatNumber = seatNumber;
-        }
-        public String getCustomerRequestType() {
-            return customerRequestType;
-        }
-        public void setCustomerRequestType(String customerRequestType) {
-            this.customerRequestType = customerRequestType;
-        }
-        public String[] getPastFiveConvo() {
-            return pastFiveConvo;
-        }
-        public void setPastFiveConvo(String[] pastFiveConvo) {
-            this.pastFiveConvo = pastFiveConvo;
-        }
-        public boolean getTalkingToCustomerService() {
-            return talkingToCustomerService;
-        }
-        public void setTalkingToCustomerService(boolean talkingToCustomerService) {
-            this.talkingToCustomerService = talkingToCustomerService;
-        }
-    */
+
     public boolean getInFlight() {
         return inFlight;
     }

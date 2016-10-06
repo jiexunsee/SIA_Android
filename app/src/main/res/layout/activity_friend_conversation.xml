@@ -11,24 +11,24 @@
     android:orientation="vertical"
     tools:context="com.rep5.sialah.sia.ChatBot">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
-        android:background="@color/colorPrimaryDark"
+        android:background="#ae7586"
         android:gravity="center">
 
-        <ImageView
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxWidth="36dp"
             android:maxHeight="36dp"
+            android:paddingLeft="6dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            android:src="@drawable/menulines2"
-            android:background="#00000000"
-            android:onClick="GoBack"/>
+            android:src="@drawable/backwhite"
+            android:onClick="GoBack"
+            android:background="#00000000"/>
 
         <ImageView
             android:layout_width="0dp"
@@ -37,7 +37,19 @@
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             android:layout_weight="1"
-            android:src="@drawable/title_mummy"/>
+            android:src="@drawable/title_mom"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="36dp"
+            android:maxHeight="36dp"
+            android:paddingRight="6dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/buttondefault"
+            android:visibility="invisible"
+            android:background="#00000000"/>
 
     </LinearLayout>
 
@@ -65,42 +77,62 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="8dp">
+        android:background="#FFFFFF"
+        android:padding="6dp"
+        android:paddingBottom="10dp">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxWidth="48dp"
-            android:maxHeight="48dp"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
-            android:background="#00000000"
-            android:src="@drawable/bookmark"
-            android:onClick="MustBuyWifi"/>
-
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:hint="Type a message"/>
 
         <ImageButton
-            android:id="@+id/send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:maxWidth="48dp"
-            android:maxHeight="48dp"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:padding="6dp"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
             android:background="#00000000"
+            android:src="@drawable/smileyface"
+            android:layout_gravity="bottom" />
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:hint="Type a message"
+                android:background="@android:color/transparent"/>
+        </FrameLayout>
+
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:padding="6dp"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
+            android:src="@drawable/attachment"
+            android:onClick="MustBuyWifi"
+            android:layout_gravity="bottom" />
+
+        <ImageButton
+            android:layout_width="36dp"
+            android:layout_height="40dp"
+            android:paddingLeft="9dp"
+            android:padding="6dp"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
+            android:src="@drawable/sendbutton_faded"
             android:enabled="false"
-            android:text="SEND"
-            android:src="@drawable/buttondefault"/>
+            android:id="@+id/send"
+            android:layout_gravity="bottom"/>
 
     </LinearLayout>
 
 </LinearLayout>
-

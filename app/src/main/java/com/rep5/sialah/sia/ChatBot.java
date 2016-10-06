@@ -333,6 +333,8 @@ public class ChatBot extends AppCompatActivity
         String message = siaMessage.getMessage();
         StaticClass.messageHistory.add(new ChatBotMessage("Sia", message));
 
+
+
         TextView reply = new TextView(this);
         reply.setTextSize(17);
         reply.setText(message);
@@ -360,9 +362,7 @@ public class ChatBot extends AppCompatActivity
 
         if (siaMessage.getContext().getSiaData().getNeedsCustomerService()) {
             StaticClass.SendMessageHistory();
-
         }
-
 
         reply.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -372,7 +372,6 @@ public class ChatBot extends AppCompatActivity
                 return true;
             }
         });
-
 
         final ScrollView scroll = (ScrollView) findViewById(R.id.scrollView);
         scroll.post(new Runnable()

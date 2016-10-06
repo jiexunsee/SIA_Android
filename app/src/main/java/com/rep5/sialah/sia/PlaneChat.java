@@ -38,7 +38,7 @@ public class PlaneChat extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                startActivityForResult(getPaymentRequest("OnAir WIFI: 1GB", "Usage is valid only for current flight", "$19.90")
+                startActivityForResult(getPaymentRequest("In-flight WIFI: 1GB", "Usage is valid only for current flight", "$19.90")
                         .getIntent(PlaneChat.this), REQUEST_CODE);
         }
     }
@@ -64,7 +64,7 @@ public class PlaneChat extends AppCompatActivity {
 
                 ChatBot.wifiState = true;
                 purchaseWIFIButton.setVisibility(View.GONE);
-                showPaymentDialog(this, "Thanks for purchasing SIA OnAir WIFI. You can now start using your WIFI access.").show();
+                showPaymentDialog(this, "Thank you for purchasing SIA in-flight WIFI. You now have full WIFI access.").show();
             }
         }
     }
@@ -87,5 +87,9 @@ public class PlaneChat extends AppCompatActivity {
                     }
                 }).create();
         return builder;
+    }
+
+    public void GoBack() {
+        onBackPressed();
     }
 }
