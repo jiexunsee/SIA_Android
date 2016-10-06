@@ -9,7 +9,7 @@ android {
     buildToolsVersion "24.0.2"
     defaultConfig {
         applicationId "com.rep5.sialah.sia"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -45,6 +45,11 @@ dependencies {
     compile 'org.glassfish.jersey.core:jersey-client:2.23.2'
     compile 'com.android.support:support-v4:24.2.1'
     testCompile 'junit:junit:4.12'
+
+    //Braintree
+    compile 'com.braintreepayments.api:braintree:2.+'
+    compile 'com.braintreepayments.api:drop-in:2.+'
+    compile 'com.google.android.gms:play-services-appindexing:9.6.1'
 }
 
 

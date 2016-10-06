@@ -23,14 +23,10 @@
         android:id="@+id/topBar">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:padding="13dp"
             android:id="@+id/showDropDownMenu"
-            android:maxWidth="36dp"
-            android:maxHeight="36dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
             android:src="@drawable/menulines2"
             android:onClick="ShowDropDownMenu"
             android:background="#00000000" />
@@ -46,9 +42,9 @@
             android:layout_weight="1" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:padding="11dp"
             android:id="@+id/showPlaneChat"
             android:maxWidth="36dp"
             android:maxHeight="36dp"
