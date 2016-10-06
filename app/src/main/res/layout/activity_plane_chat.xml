@@ -16,15 +16,14 @@
         android:id="@+id/topbar"
         android:background="#9cd9ff">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <ImageView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Plane Chat"
-            android:textColor="#032841"
-            android:textSize="20dp"
-            android:layout_gravity="left"
+            android:maxHeight="24dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
             android:layout_weight="1"
-            android:padding="10dp"/>
+            android:src="@drawable/title_planechat"/>
 
         <ImageButton
             android:layout_width="wrap_content"

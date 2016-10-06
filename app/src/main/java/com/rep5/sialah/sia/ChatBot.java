@@ -28,6 +28,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.braintreepayments.api.BraintreePaymentActivity;
+import com.braintreepayments.api.models.PaymentMethodNonce;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
@@ -52,6 +54,7 @@ public class ChatBot extends AppCompatActivity
     private static ChatBot instance;
     public static ImageView title;
     public static boolean wifiState = false;
+    private static final int REQUEST_CODE = 99;
 
 
     public static class MessageViewHolder extends RecyclerView.ViewHolder {
@@ -192,7 +195,11 @@ public class ChatBot extends AppCompatActivity
                 //DISPLAY MESSAGE
                 mMessageEditText.setText("");
 
-                TextView bubble = getTextView(text, 1);
+                TextView bubble = new TextView(getApplicationContext());
+                bubble.setTextSize(17);
+                bubble.setText(text);
+                bubble.setTextColor(Color.parseColor("#000000"));
+                bubble.setBackgroundResource(R.drawable.sendbubble);
                 LinearLayout.LayoutParams bubblelayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
                 bubblelayout.setMargins(200, 6, 6, 6);
                 bubblelayout.gravity = Gravity.RIGHT;
@@ -326,7 +333,11 @@ public class ChatBot extends AppCompatActivity
         String message = siaMessage.getMessage();
         StaticClass.messageHistory.add(new ChatBotMessage("Sia", message));
 
-        TextView reply = getTextView(message, 0);
+        TextView reply = new TextView(this);
+        reply.setTextSize(17);
+        reply.setText(message);
+        reply.setTextColor(Color.parseColor("#000000"));
+        reply.setBackgroundResource(R.drawable.receivebubble);
         LinearLayout.LayoutParams replylayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
         replylayout.setMargins(6, 6, 200, 6);
         replylayout.gravity = Gravity.LEFT;
@@ -386,7 +397,11 @@ public class ChatBot extends AppCompatActivity
 
 
     public void FakeBooking(LinearLayout.LayoutParams replylayout, ViewGroup chatbubbles) {
-        TextView choose = getTextView("CHOOSE DATE", 2);
+        TextView choose = new TextView(this);
+        choose.setTextSize(17);
+        choose.setText("CHOOSE DATE");
+        choose.setTextColor(Color.parseColor("#000000"));
+        choose.setBackgroundResource(R.drawable.rounded_corners2);
         choose.setLayoutParams(replylayout);
         chatbubbles.addView(choose);
 
@@ -410,7 +425,11 @@ public class ChatBot extends AppCompatActivity
     }
 
     public void ChooseFlight() {
-        TextView dateReply = getTextView("I have found the following flights on your chosen date. Click to select one of them:", 0);
+        TextView dateReply = new TextView(this);
+        dateReply.setTextSize(17);
+        dateReply.setText("I have found the following flights on your chosen date. Click to select one of them:");
+        dateReply.setTextColor(Color.parseColor("#000000"));
+        dateReply.setBackgroundResource(R.drawable.receivebubble);
         LinearLayout.LayoutParams replylayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
         replylayout.setMargins(6, 6, 200, 6);
         replylayout.gravity = Gravity.LEFT;
@@ -425,19 +444,19 @@ public class ChatBot extends AppCompatActivity
         View choice2 = getLayoutInflater().inflate(R.layout.flight_option2, null, false);
         chatbubbles.addView(choice2);
 
+
         choice1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Payment.class);
-                startActivity(intent);
+            public void onClick(View view) {
+                startActivityForResult(PlaneChat.getPaymentRequest("Flight from Singapore to San Francisco", "05 December 2016, 20:00", "$1971.80")
+                        .getIntent(ChatBot.this), REQUEST_CODE);
             }
         });
-
         choice2.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Payment.class);
-                startActivity(intent);
+            public void onClick(View view) {
+                startActivityForResult(PlaneChat.getPaymentRequest("Flight SQ32 - Singapore to San Francisco", "05 December 2016, 20:00", "$1971.80")
+                        .getIntent(ChatBot.this), REQUEST_CODE);
             }
         });
 
@@ -452,27 +471,17 @@ public class ChatBot extends AppCompatActivity
 
     }
 
-    private TextView getTextView(String text, int type) {
-        TextView dateReply = new TextView(this);
-        dateReply.setTextSize(17);
-        dateReply.setText(text);
-        dateReply.setTextColor(Color.parseColor("#000000"));
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                PaymentMethodNonce paymentMethodNonce = data.getParcelableExtra(
+                        BraintreePaymentActivity.EXTRA_PAYMENT_METHOD_NONCE
+                );
 
-        switch (type) {
-            case 0:
-                dateReply.setBackgroundResource(R.drawable.receivebubble);
-                break;
-
-            case 1:
-                dateReply.setBackgroundResource(R.drawable.sendbubble);
-                break;
-
-            case 2:
-                dateReply.setBackgroundResource(R.drawable.rounded_corners2);
+                PlaneChat.showPaymentDialog(this, "You have successfully purchased: Flight SQ32 - Singapore to San Francisco.").show();
+            }
         }
-
-
-        return dateReply;
     }
 
 
