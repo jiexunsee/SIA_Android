@@ -26,6 +26,7 @@ public class DropDownMenu extends AppCompatActivity {
     }
 
     public void ShowTicket(View view) {
+        onBackPressed();
         Intent intent = new Intent (this, Ticket.class);
         startActivity(intent);
     }

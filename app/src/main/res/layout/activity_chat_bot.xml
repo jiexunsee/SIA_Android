@@ -133,7 +133,8 @@
                 android:textSize="17sp"
                 android:inputType="textCapSentences"
                 android:hint="Type a message to Sia"
-                android:background="@android:color/transparent"/>
+                android:background="@android:color/transparent"
+                android:onClick="focus"/>
         </FrameLayout>
 
 

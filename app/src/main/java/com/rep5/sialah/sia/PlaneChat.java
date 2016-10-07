@@ -14,6 +14,9 @@ import com.braintreepayments.api.BraintreePaymentActivity;
 import com.braintreepayments.api.PaymentRequest;
 import com.braintreepayments.api.models.PaymentMethodNonce;
 
+import static com.rep5.sialah.sia.FriendConversation.lastMessage;
+import static com.rep5.sialah.sia.FriendConversation.lastSender;
+
 public class PlaneChat extends AppCompatActivity {
     private static final String TAG = "PlaneChat";
     private static final int REQUEST_CODE = 99;
@@ -41,10 +44,18 @@ public class PlaneChat extends AppCompatActivity {
                 startActivityForResult(getPaymentRequest("In-flight WIFI: 1GB", "Usage is valid only for current flight", "$19.90")
                         .getIntent(PlaneChat.this), REQUEST_CODE);
         }
+        });
+
+//        TextView previous = (TextView) findViewById(R.id.last_message);
+//        if (lastSender != null && lastMessage != null) previous.setText(lastSender + ": " + lastMessage);
     }
 
-    );
-}
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TextView previous = (TextView) findViewById(R.id.last_message);
+        if (lastSender != null && lastMessage != null) previous.setText(lastSender + ": " + lastMessage);
+    }
 
     public void OpenConversation(View view) {
         Intent intent = new Intent(this, FriendConversation.class);
