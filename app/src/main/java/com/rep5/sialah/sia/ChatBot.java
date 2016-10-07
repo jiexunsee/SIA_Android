@@ -81,6 +81,8 @@ public class ChatBot extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_bot);
 
+        StaticClass.messageHistory.clear();
+
         getWindow().setBackgroundDrawableResource(R.drawable.siabglogo);
 
         ViewGroup root = (ViewGroup) findViewById(R.id.activity_chat_bot);
@@ -610,33 +612,6 @@ public class ChatBot extends AppCompatActivity
     private ViewTreeObserver.OnGlobalLayoutListener keyboardLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
         @Override
         public void onGlobalLayout() {
-/*
-            View scrollView = findViewById(R.id.scrollView);
-            int heightDiff = scrollView.getRootView().getHeight() - scrollView.getHeight();
-            int contentViewTop = getWindow().findViewById(Window.ID_ANDROID_CONTENT).getTop();
-
-            LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(ChatBot.this);
-
-            if(heightDiff <= contentViewTop){
-                final ScrollView scroll = (ScrollView) findViewById(R.id.scrollView);
-                scroll.post(new Runnable()
-                {
-                    public void run()
-                    {
-                        scroll.fullScroll(View.FOCUS_DOWN);
-                    }
-                });
-
-                Intent intent = new Intent("KeyboardWillHide");
-                broadcastManager.sendBroadcast(intent);
-            } else {
-                int keyboardHeight = heightDiff - contentViewTop;
-                onShowKeyboard(keyboardHeight);
-
-                Intent intent = new Intent("KeyboardWillShow");
-                intent.putExtra("KeyboardHeight", keyboardHeight);
-                broadcastManager.sendBroadcast(intent);
-            }*/
             final ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView);
             scrollView.post(new Runnable()
             {
