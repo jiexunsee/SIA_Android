@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -17,6 +18,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -76,8 +79,12 @@ public class ChatBot extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_chat_bot);
 
         getWindow().setBackgroundDrawableResource(R.drawable.siabglogo);
+
+        ViewGroup root = (ViewGroup) findViewById(R.id.activity_chat_bot);
+        root.getViewTreeObserver().addOnGlobalLayoutListener(keyboardLayoutListener);
 
         SendToken.send();
 
@@ -90,8 +97,6 @@ public class ChatBot extends AppCompatActivity
 
         instance = this;
         title = (ImageView) findViewById(R.id.convoTitle);
-
-        setContentView(R.layout.activity_chat_bot);
 
         FirebaseMessaging.getInstance().subscribeToTopic("sia");
 
@@ -601,4 +606,45 @@ public class ChatBot extends AppCompatActivity
         });
 
     }
+
+    private ViewTreeObserver.OnGlobalLayoutListener keyboardLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
+        @Override
+        public void onGlobalLayout() {
+/*
+            View scrollView = findViewById(R.id.scrollView);
+            int heightDiff = scrollView.getRootView().getHeight() - scrollView.getHeight();
+            int contentViewTop = getWindow().findViewById(Window.ID_ANDROID_CONTENT).getTop();
+
+            LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(ChatBot.this);
+
+            if(heightDiff <= contentViewTop){
+                final ScrollView scroll = (ScrollView) findViewById(R.id.scrollView);
+                scroll.post(new Runnable()
+                {
+                    public void run()
+                    {
+                        scroll.fullScroll(View.FOCUS_DOWN);
+                    }
+                });
+
+                Intent intent = new Intent("KeyboardWillHide");
+                broadcastManager.sendBroadcast(intent);
+            } else {
+                int keyboardHeight = heightDiff - contentViewTop;
+                onShowKeyboard(keyboardHeight);
+
+                Intent intent = new Intent("KeyboardWillShow");
+                intent.putExtra("KeyboardHeight", keyboardHeight);
+                broadcastManager.sendBroadcast(intent);
+            }*/
+            final ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView);
+            scrollView.post(new Runnable()
+            {
+                public void run()
+                {
+                    scrollView.fullScroll(View.FOCUS_DOWN);
+                }
+            });
+        }
+    };
 }
