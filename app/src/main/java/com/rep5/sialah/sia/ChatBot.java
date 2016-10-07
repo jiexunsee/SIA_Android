@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -68,9 +69,6 @@ public class ChatBot extends AppCompatActivity
     // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
-    static DatabaseReference mFirebaseDatabaseReference;
-//    private FirebaseRecyclerAdapter<FriendlyMessage, MessageViewHolder>
-//            mFirebaseAdapter;
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     private FlightCalendarFragment mFlightCalendarFragment;
 
@@ -590,5 +588,17 @@ public class ChatBot extends AppCompatActivity
     public void onFlightCalendarCancel() {
         mFlightCalendarFragment.dismiss();
         hideKeyboard(this);
+    }
+
+    public void focus(View view) {
+        final ScrollView scroll = (ScrollView) findViewById(R.id.scrollView);
+        scroll.post(new Runnable()
+        {
+            public void run()
+            {
+                scroll.fullScroll(View.FOCUS_DOWN);
+            }
+        });
+
     }
 }

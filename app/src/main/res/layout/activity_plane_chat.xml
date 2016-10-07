@@ -69,7 +69,8 @@
                 android:gravity="left"
                 android:id="@+id/contact"
                 android:onClick="OpenConversation"
-                android:layout_marginTop="-6dp">
+                android:layout_marginTop="-6dp"
+                android:background="?android:attr/selectableItemBackground">
 
                 <ImageView
                     android:layout_width="48dp"
@@ -91,8 +92,9 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/contact_name"
                         android:text="Mom"
-                        android:textSize="18sp"
-                        android:padding="4dp"/>
+                        android:textSize="16sp"
+                        android:padding="4dp"
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -136,8 +138,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Yu Xuan"
-                        android:textSize="18sp"
-                        android:padding="4dp"/>
+                        android:textSize="16sp"
+                        android:padding="4dp"
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -180,8 +183,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Sean"
-                        android:textSize="18sp"
-                        android:padding="4dp"/>
+                        android:textSize="16sp"
+                        android:padding="4dp"
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -224,8 +228,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ang Yang"
-                        android:textSize="18sp"
-                        android:padding="4dp"/>
+                        android:textSize="16sp"
+                        android:padding="4dp"
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="wrap_content"

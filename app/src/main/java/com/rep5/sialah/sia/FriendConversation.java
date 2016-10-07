@@ -24,6 +24,8 @@ public class FriendConversation extends AppCompatActivity {
     private static FriendConversation friendInstance;
     private ImageButton sendButton;
     private EditText editText;
+    public static String lastMessage;
+    public static String lastSender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +92,9 @@ public class FriendConversation extends AppCompatActivity {
                         scroll.fullScroll(View.FOCUS_DOWN);
                     }
                 });
+
+                lastMessage = text;
+                lastSender = "You";
             }
         });
     }
@@ -135,6 +140,9 @@ public class FriendConversation extends AppCompatActivity {
                 scroll.fullScroll(View.FOCUS_DOWN);
             }
         });
+
+        lastMessage = message;
+        lastSender = "Mom";
 
     }
 
